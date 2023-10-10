@@ -1,0 +1,80 @@
+/*
+ * Colors
+ */
+@primary-color: #102d51;
+@primary-alt-color: #102d51;
+@secondary-color: #0070b9; //#a91d39;
+@secondary-alt-color: darken(@secondary-color, 10%);
+@tertiary-color: #a7c3cf;
+@tertiary-alt-color: #a7c3cf;
+@quaternary-color: #e7e3d2;
+@quaternary-alt-color: #e7e3d2;
+@highlight-color: #fff;
+@highlight-alt-color: #f5f5f5;
+@red-accent-color:#a91d39;
+
+@accent-tan-color: #e7e3d2;
+@accent-blue-color: #0070b9;
+@accent-gray-color: #7d7d7d;
+
+@primary-icon-color: @primary-color;
+@primary-icon-accent-color: @accent-gray-color;
+@primary-button-icon-color: @highlight-color;
+@primary-button-icon-accent-color: @accent-gray-color;
+@progress-bar-color: @accent-blue-color;
+
+
+@swatch1: #5eb1bf;
+@swatch2: #cdedf6;
+@swatch3: @primary-color;
+@swatch4: #e74;
+@swatch5: @highlight-color;
+@swatch6: #0070b9;
+
+@progress-completed: #229944;
+@progress-started: #FFBB00;
+@progress-not-started: #888;
+@study-group-info: @swatch6;
+
+
+
+/*
+ * Fonts
+ */
+// Freight Display Pro
+@font-face {
+	font-family: 'Freight Display Pro Black';
+	src:
+		url('./fonts/Freight_Display_Pro/freigdispromed-webfont.woff2') format('woff2'),
+		url('./fonts/Freight_Display_Pro/freigdispromed-webfont.woff') format('woff'),
+		url('./fonts/Freight_Display_Pro/freigdispromed-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+// Freight Sans Pro
+@font-face {
+	font-family: 'Freight Sans Pro Book';
+	src:
+		url('./fonts/Freight_Sans_Pro/freigsanprobook-webfont.woff2') format('woff2'),
+		url('./fonts/Freight_Sans_Pro/freigsanprobook-webfont.woff') format('woff'),
+		url('./fonts/Freight_Sans_Pro/freigsanprobook-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+// Font Applications
+@body-font: "Freight Sans Pro Book", Arial, sans-serif;
+@title-font: "Freight Display Pro Black", Times, serif;
+@subtitle-font: "Minion Pro", Times, sans-serif;
+@paragraph-font: "Freight Sans Pro Book", Arial, sans-serif;
+
+
+
+/*
+ * Utilities
+ */
+@sidebar-width: 425px;
+@transition: all 0.15s ease-in-out;
+@text-shadow: 1px 1px 1px @primary-color;
+@header-height: 64px;

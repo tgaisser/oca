@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CourseDonateLinksComponent should render normally (all props) - split text 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText={[Function Boolean]}
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    <br />
+    Course Books
+  </a><a
+    class="btn btn-primary"
+    href="dvd"
+    target="_blank"
+  >
+    Get the 
+    <br />
+    Course DVD
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (all props) 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText="false"
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    Course Books
+  </a><a
+    class="btn btn-primary"
+    href="dvd"
+    target="_blank"
+  >
+    Get the 
+    Course DVD
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (book non-plural) - split text 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText={[Function Boolean]}
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    <br />
+    Course Book
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (book non-plural) 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText="false"
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    Course Book
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (book plural) - split text 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText={[Function Boolean]}
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    <br />
+    Course Books
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (book plural) 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText="false"
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    Course Books
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (classes) 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText="false"
+>
+  <a
+    class="btn btn-primary"
+    href="book"
+    target="_blank"
+  >
+    Get the 
+    Course Book
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (dvd) - split text 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText={[Function Boolean]}
+>
+  <a
+    class="btn btn-primary"
+    href="dvd"
+    target="_blank"
+  >
+    Get the 
+    <br />
+    Course DVD
+  </a>
+</app-course-donate-links>
+`;
+
+exports[`CourseDonateLinksComponent should render normally (dvd) 1`] = `
+<app-course-donate-links
+  __ngContext__={[Function LRootView]}
+  _classes={[Function Array]}
+  course={[Function Object]}
+  splitText="false"
+>
+  <a
+    class="btn btn-primary"
+    href="dvd"
+    target="_blank"
+  >
+    Get the 
+    Course DVD
+  </a>
+</app-course-donate-links>
+`;

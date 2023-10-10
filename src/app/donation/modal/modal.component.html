@@ -1,0 +1,7 @@
+<ng-container *ngIf="options && options.donationBody">
+<div class="modal-body" [innerHtml]="options.donationBody"></div>
+<div class="modal-footer" *ngIf="options.donationButtons && options.donationButtons.length > 0">
+	<a *ngFor="let button of options.donationButtons" class="btn btn-secondary" [href]="button.buttonLink" [target]="button.buttonTarget">{{button.buttonText}}</a>
+	<button type="button" class="btn btn-outline-primary" (click)="modal.hide()">Close</button>
+</div>
+</ng-container>

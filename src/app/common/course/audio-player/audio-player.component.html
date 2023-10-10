@@ -1,0 +1,96 @@
+<ng-template [ngIf]="multimedia?.id && multimedia.audio_download_filename">
+	<h4 *ngIf="title" [innerHTML]="title"></h4>
+<!--	<audio controls>-->
+<!--		<source src="http://192.168.254.13:8080/files/a/215964d4-33ee-421a-a43c-2cb8f2e14b40/lecture_1.m3u">-->
+<!--		<source src="http://192.168.254.13:8080/files/a/215964d4-33ee-421a-a43c-2cb8f2e14b40/lecture_1.mp3" type="audio/mpeg">-->
+<!--	</audio>-->
+	<div class="audio-wrapper" *ngIf="!loadFailed; else audioFailed">
+	<div class="audio-preview-image" style="" [ngStyle]="getBackgroundStyles()">
+		<fa-icon *ngIf="playerIsLoading" [icon]="faSpinner" [spin]="true" class="loading-spinner"></fa-icon>
+		<button class="skip-control skip-back" (click)="skipBackward10()">
+			<svg height="60" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-5 1 82 82">
+				<path d="M36,9V0L13.5,13.5L36,27v-9c14.9,0,27,12.1,27,27S50.9,72,36,72S9,59.9,9,45H0c0,19.9,16.1,36,36,36s36-16.1,36-36
+        S55.9,9,36,9z"/>
+				<g>
+					<path d="M24.8,56.5V43.7l-3.2,0.7l-0.2-5.6l10.2-2.3v19.9L24.8,56.5L24.8,56.5z"/>
+					<path d="M35,46.9c0-6.4,2.7-10.2,7.9-10.2s7.7,3.7,7.7,10.2c0,6.4-2.7,10.3-7.9,10.3C37.6,57.1,35,53.3,35,46.9z M44.1,46.8
+                c0-4.1-0.4-5.2-1.3-5.2s-1.3,1-1.3,5.2c0,4.1,0.4,5.2,1.3,5.2S44.1,51,44.1,46.8z"/>
+				</g>
+			</svg>
+			<span class="sr-only">Skip backward</span>
+		</button>
+		<button class="skip-control skip-forward" (click)="skipForward10()">
+			<svg height="60" aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="-5 1 82 82">
+				<path d="M0,45c0,19.9,16.1,36,36,36s36-16.1,36-36h-9c0,14.9-12.1,27-27,27S9,59.9,9,45s12.1-27,27-27v9l22.5-13.5L36,0v9
+        C16.1,9,0,25.1,0,45z"/>
+				<g>
+					<path d="M24.8,56.5V43.7l-3.2,0.7l-0.2-5.6l10.2-2.3v19.9H24.8z"/>
+					<path d="M35,46.9c0-6.4,2.7-10.2,7.9-10.2c5.2,0,7.7,3.7,7.7,10.2c0,6.4-2.7,10.3-7.9,10.3C37.6,57.1,35,53.3,35,46.9z M44.1,46.8
+                c0-4.1-0.4-5.2-1.3-5.2s-1.3,1-1.3,5.2c0,4.1,0.4,5.2,1.3,5.2S44.1,51,44.1,46.8z"/>
+				</g>
+			</svg>
+			<span class="sr-only">Skip forward</span>
+		</button>
+		<div class="play-control d-flex d-md-none">
+			<button (click)="playToggle()">
+				<fa-icon [icon]="playing ? faPause : faPlay" [fixedWidth]="true" [ngClass]="{'play-icon': !playing}"></fa-icon>
+			</button>
+		</div>
+	</div>
+
+	<div class="audio-player">
+		<div class="play-control d-none d-md-block">
+			<button (click)="playToggle()">
+				<fa-icon [icon]="playing ? faPause : faPlay" [fixedWidth]="true"></fa-icon>
+			</button>
+		</div>
+
+		<div class="play-timer"> {{currentTime}} <!--/ {{trackLength}} --></div>
+		<div class="waveform" [id]="'waveform-' + this.multimedia.id" #waveform></div>
+		<div class="play-timer"> {{trackLength}}</div>
+		<div class="volume-control">
+			<button (click)="toggleVolume()">
+				<fa-icon [icon]="faVolumeUp"></fa-icon>
+				<span class="sr-only">Adjust volume</span>
+			</button>
+			<div class="slider" [ngStyle]="{'display': showVolumeSlider ? 'flex' : 'none'}">
+				<input type="range" (change)="changeVolume($event)" />
+			</div>
+		</div>
+		<div class="desktop-settings d-none d-md-flex">
+			<div class="rate-control">
+				<div class="rate-list">
+					<a *ngFor="let rate of availableRates" (click)="setPlaybackRate(rate)" [ngClass]="{'current': playbackRate === rate}">
+						<span class="rate-num">{{rate}}</span><span class="rate-suffix">&times;</span>
+					</a>
+				</div>
+				<button (click)="movePlaybackSpeed()">
+					<span class="rate-num">{{playbackRate.toFixed(1)}}</span><span class="rate-suffix">&times;</span>
+				</button>
+			</div>
+			<a *ngIf="downloadSrcUrl" [href]="downloadSrcUrl" (click)="onAudioDownload()" target="_blank" class="download-audio" [download]="downloadName">
+				<fa-icon [icon]="faDownload"></fa-icon>
+				<span class="sr-only">Download Audio</span>
+			</a>
+		</div>
+		<div class="settings d-md-none">
+			<button (click)="toggleSettings()"><fa-icon [icon]="faCog"></fa-icon><span class="sr-only">More Settings</span></button>
+			<div class="details" [ngStyle]="{'display': showSettings ? 'flex' : 'none'}">
+				<div class="rate-control">
+					<button (click)="movePlaybackSpeed()">
+						<span class="rate-num">{{playbackRate.toFixed(1)}}</span><span class="rate-suffix">&times;</span>
+					</button>
+				</div>
+				<a *ngIf="downloadSrcUrl" [href]="downloadSrcUrl" (click)="onAudioDownload()" target="_blank" class="download-audio" [download]="downloadName">
+					<fa-icon [icon]="faDownload"></fa-icon>
+					<span class="sr-only">Download Audio</span>
+				</a>
+			</div>
+		</div>
+
+	</div>
+	</div>
+	<ng-template #audioFailed>
+		<h5 class="text-center text-error">The file failed to load. If this persists, please <a [href]="'mailto:' + supportEmail + '?subject=Audio file failed for ' + downloadSrcUrlRaw">contact support</a>.</h5>
+	</ng-template>
+</ng-template>

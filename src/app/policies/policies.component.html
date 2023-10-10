@@ -1,0 +1,36 @@
+<main id="main-content" class="container" *ngIf="pagePolicies$ | async as pagePolicies">
+	<div class="row">
+		<div class="col-12">
+			<h1 *ngIf="pagePolicies.page_title; else dummyPageTitle" class="page-title" tabindex="-1"
+				[innerHTML]="pagePolicies.page_title|hcSimpleMd"></h1>
+			<ng-template #dummyPageTitle>
+				<div class="dummy-section">
+					<div class="page-title" class="h1 dummy-page-title"></div>
+				</div>
+			</ng-template>
+		</div>
+	</div>
+
+	<ng-container *ngIf="pagePolicies.policies; else dummyPageContent">
+		<div class="row" *ngFor="let policy of pagePolicies.policies">
+			<div class="col-12 policy">
+				<h2 [innerHTML]="policy.system_name|hcSimpleMd"></h2>
+				<div [innerHTML]="policy.content"></div>
+			</div>
+		</div>
+	</ng-container>
+	<ng-template #dummyPageContent>
+		<div class="dummy-section">
+			<div class="row">
+				<div class="col-12 policy">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</main>

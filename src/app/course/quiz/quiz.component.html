@@ -1,0 +1,95 @@
+<div class="quiz-wrapper">
+<ng-container *ngIf="quizResult$ | async as quizResult; else quizFormView">
+	<ng-template [ngIf]="quizResult && !takingQuiz" [ngIfElse]="quizFormView">
+		<ng-container *ngIf="quizType === 'final' && quizResult.percentageCorrect >= 0.80; else ordinaryQuizHeader">
+			<div class="row mt-5">
+				<div class="col-md-6">
+					<h2 class="h2 text-title-font">Congratulations!</h2>
+					<h3 class="h3">You have passed the final quiz.</h3>
+					<p [innerHTML]="getBestScoreText(quizResult)"></p>
+					<p *ngIf="quizResult.results" [innerHTML]="getLastTakenDateText(quizResult)"></p>
+					<hr class="my-5">
+					<div class="btn-group final-quiz-buttons">
+						<a *ngIf="quizResult.results" class="btn btn-outline-primary btn-sm show-results-btn" href="javascript:void(0)" (click)="showResultsWhenAvailable=!showResultsWhenAvailable">{{showResultsWhenAvailable ? 'Hide' : 'Show'}} results</a>
+						<app-complete-cert-button *ngIf="quizType === 'final' && quizResult.percentageCorrect >= 0.8" [courseId]="courseId" [showAsButton]="false"></app-complete-cert-button>
+						<button class="btn btn-sm btn-link" type="button" (click)="retakeQuiz()">Retake</button>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="share-wrapper">
+						<app-social-share
+							[shareURL]="'https://online.hillsdale.edu/landing/'+course.url_slug"
+							[shareText]="'I completed Hillsdale College\'s Online Course on '+course.title+' and scored '+quizResult.percentageCorrect*100+'%25!'"
+							[facebook]="true"
+							[twitter]="true"
+							[email]="true"
+						></app-social-share>
+					</div>
+					<div class="catalog-entry-wrapper" style="pointer-events: none;">
+						<app-course-catalog-entry class="col-sm-6 col-lg-4" [catalogEntry]="course" [showSubjects]="false"></app-course-catalog-entry>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+		<ng-template #ordinaryQuizHeader>
+			<h1 *ngIf="quizType === 'final'" class="page-title" tabindex="-1" [innerHTML]="course.title | hcSimpleMd"></h1>
+			<p [innerHTML]="getBestScoreText(quizResult)"></p>
+			<p *ngIf="quizResult.results" [innerHTML]="getLastTakenDateText(quizResult)"></p>
+
+			<div class="btn-group">
+				<a *ngIf="quizResult.results" class="btn btn-outline-primary btn-sm show-results-btn" href="javascript:void(0)" (click)="showResultsWhenAvailable=!showResultsWhenAvailable">{{showResultsWhenAvailable ? 'Hide' : 'Show'}} results</a>
+				<button *ngIf="quizType !== 'final' || quizResult.percentageCorrect < 0.80" class="btn btn-sm btn-outline-primary" type="button" (click)="retakeQuiz()">Retake</button>
+			</div>
+		</ng-template>
+
+		<div class="row" [ngClass]="quizType === 'final' ? 'content-v-padding' : ''">
+			<div *ngIf="quizResult.results && showResultsWhenAvailable" [ngClass]="quizType === 'final' ? 'col-lg-8' : 'col-lg-12'">
+				<div class="quiz-results">
+					<div *ngFor="let q of getParsedResults(quizResult)" class="question">
+						<div class="question-text" [innerHtml]="q.question | hcSimpleMd | quizBlank"></div>
+						<!--div class="question-answer-location" *ngIf="!q.correct && q.answerLocation">
+							The correct answer can be found in the lecture at <a class="timestamp" (click)="openVideoPreview(q.answerLocation, $event)">{{q.answerLocationTimestamp}}</a>
+							<sup [title]="q.answerLocationText" class="fas fa-question-circle timestamp-desc"></sup>
+						</div-->
+						<div class="answers">
+							<div class="answer" *ngFor="let a of q.options" [ngClass]="{'correct': (a.correct && (a.selected || quizType !== 'final')), 'selected': a.selected}"><span class="answer-text" [innerHtml]="a.value | hcSimpleMd"></span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="quizType === 'final' && quizResult.percentageCorrect >= 0.80" [ngClass]="showResultsWhenAvailable ? 'col-lg-4' : 'col-lg-12'">
+				<app-next-course [singleColumnLayout]="showResultsWhenAvailable"></app-next-course>
+			</div>
+		</div>
+	</ng-template>
+</ng-container>
+
+<ng-template #quizFormView>
+
+	<p></p>
+	<div class="quiz-description" *ngIf="quiz && quiz.description" [innerHTML]="quiz.description"></div>
+	<form *ngIf="quiz && quiz.questions" [formGroup]="quizForm" (ngSubmit)="submitQuiz()" id="question-form">
+		<fieldset tabindex="0" role="radiogroup" class="form-group" *ngFor="let q of quiz.questions">
+			<label class="quiz-question-label" [id]="'question-' + q.system_id + '-label'" [innerHtml]="q.question | hcSimpleMd | quizBlank"></label>
+			<div class="extra-details" *ngIf="q.extra_details" [innerHTML]="q.extra_details"></div>
+			<div class="form-check" *ngFor="let o of mappedQuiz[q.system_id]">
+				 <input role="radio" type="radio" class="form-check-input"
+				   [name]="q.system_id"
+				   [formControlName]="q.system_id"
+				   [value]="o.key"
+				   [id]="'question-' + q.system_id + '-'  + o.key + '-input'"
+				   [attr.aria-labelledby]="'question-' + q.system_id + '-label question-' + q.system_id + '-'  + o.key + '-label'" />
+				<label class="form-check-label"
+				   [id]="'question-' +q.system_id + '-' + o.key +'-label'"
+				   [for]="'question-' + q.system_id + '-'  + o.key + '-input'" [innerHtml]="o.value | hcSimpleMd">
+				</label>
+			</div>
+		</fieldset>
+		<div *ngIf="questionStatus$ | async as status" class="remaining-questions">
+			<div>{{status.numQuestions - status.numIncomplete}}/{{status.numQuestions}} questions are answered</div>
+			<div *ngIf="status.numIncomplete && status.percentIncomplete <= 0.3">Question{{status.numIncomplete !== 1 ? 's': ''}} {{status.incompleteQuestions|hcOxfordJoin}} ha{{status.numIncomplete > 1 ? 've': 's'}} not been answered.</div>
+		</div>
+		<button type="submit" [disabled]="!quizForm.valid" class="btn btn-primary">Submit</button>
+	</form>
+</ng-template>
+</div>

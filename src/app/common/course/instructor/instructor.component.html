@@ -1,0 +1,4 @@
+<div class="instructor" *ngIf="instructor">
+	<h3 class="h4 instructor-name sr-only">{{ instructor | instructorName }}</h3>
+	<div class="instructor-bio" *ngIf="instructor.short_bio && instructor.short_bio !== '<p><br></p>'" [innerHTML]="instructor.short_bio"></div>
+</div>

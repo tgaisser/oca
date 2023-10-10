@@ -1,0 +1,45 @@
+@import "variables";
+
+.lecture-progress-wrapper {
+	padding-top: 10px;
+
+	@media (min-width: 768px) {
+		padding-left: 50px;
+	}
+}
+
+.lecture-progress {
+	height: 3px;
+}
+
+.content-toggle {
+	text-align: right;
+
+	.btn {
+		position: relative;
+		img {
+			display: block;
+		}
+	}
+}
+
+.content-properties {
+	font-family: @subtitle-font;
+}
+
+.card-header:not(.collapsed) {
+	.lecture-selected .btn-primary.lecture,
+	.qa-selected .btn-primary.qa,
+	.quiz-selected .btn-primary.quiz {
+		color: @highlight-color;
+		background-color: @secondary-color;
+		border-color: @secondary-color;
+		.fa-inverse{
+		   color: @secondary-color;
+		}
+	}
+}
+
+.lecture .card-body {
+	padding: 5px;
+}

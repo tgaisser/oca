@@ -1,0 +1,71 @@
+<main id="main-content" class="landing-template-v1" *ngIf="course$ | async as course">
+	<div class="container trailer-container mt-3">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="page-title h1 text-center sr-only" tabindex="-1" [innerHTML]="course.title | hcSimpleMd"></h1>
+
+				<div class="trailer bg-blue">
+					<img *ngIf="course?.catalog_image?.url" [src]="course?.catalog_image?.url" alt="" class="trailer-art">
+					<ng-container *ngIf="course?.course_trailer">
+						<hc-video-player #trailerVideo class="trailer-art trailer-video" [attr.multimedia]="stringifyMM(course.course_trailer)" [ngStyle]="{'z-index': hideTrailerOverlay ? 1: -1}" [attr.player-type-preference]='playerPreference'></hc-video-player>
+					</ng-container>
+					<div class="trailer-overlay" *ngIf="course?.course_trailer" [ngClass]="{'d-none': hideTrailerOverlay}">
+						<button class="btn btn-primary play-button" type="button" (click)="playTrailerVideo()"><span class="sr-only">Play Trailer</span><fa-icon [icon]="faPlay"></fa-icon></button>
+					</div>
+				</div>
+
+				<h2 *ngIf="preEnrollmentActive" class="h3 text-center">Coming {{course.publication_date | date: 'MMMM d, yyyy'}}</h2>
+
+				<h2 class="h2" [innerHtml]="course?.study_group_headline | hcSimpleMd"></h2>
+				<div [innerHtml]="course?.study_group_body_text"></div>
+			</div>
+		</div>
+
+		<div class="row my-3">
+			<div class="col-lg-6">
+				<h3 class="h4" [innerHtml]="course?.study_group_cta_text | hcSimpleMd"></h3>
+				<ng-container *ngIf="userStatus$ | async as userStatus">
+					<ng-container *ngIf="userStatus.isLoggedIn; else loggedOutForm">
+						<form class="form gtm-enroll-form">
+							<p>
+								Signed in as: <strong class="mr-2">{{userStatus.email}}</strong>
+								<a href="javascript:void(0);" (click)="logOut()" class="d-inline-block small">Sign&nbsp;Out</a>
+							</p>
+							<div class="btn-group my-3">
+								<button class="btn btn-primary btn-allow-invalid-click" type="submit" (click)="enrollInCourse(course)"><span *ngIf="preEnrollmentActive">Pre-</span>Enroll now »</button>
+							</div>
+						</form>
+					</ng-container>
+					<ng-template #loggedOutForm>
+						<form hcForm [formGroup]="enrollmentForm" class="form gtm-enroll-form" (hcValidSubmit)="enrollInCourse(course)" [loadQueryParams]="true">
+<!--							<p class="text-center">To enroll in <strong [innerHTML]="course.title | hcSimpleMd"></strong>, please enter your email&nbsp;address.</p>-->
+							<p class="text-center">To get started, please enter your email&nbsp;address.</p>
+							<div class="form-row">
+								<div class="form-group col-lg-12" hc-form-field fieldType="email" fieldName="Email" elemId="email" autoComplete="email" requiredHtml="">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="col-lg-12 text-center">
+									<div class="btn-group my-3">
+<!--										<button class="btn btn-primary btn-allow-invalid-click" type="submit"><span *ngIf="preEnrollmentActive">Pre-</span>Enroll now »</button>-->
+										<button class="btn btn-primary btn-allow-invalid-click" type="submit">Get Started »</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</ng-template>
+				</ng-container>
+			</div>
+			<div class="col-lg-6">
+				<div class="testimonials">
+					<h3 class="h4">What students say</h3>
+					<div class="testimonial" *ngFor="let testimonial of testimonials$|async">
+						<span [innerHTML]="testimonial.message|hcSimpleMd"></span>
+						<p>– {{testimonial.user_name || anonymous_user}}</p>
+						<br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>

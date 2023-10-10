@@ -1,0 +1,57 @@
+@import "variables";
+
+.site-notification-banner {
+	display: none;
+	align-items: center;
+	justify-content: center;
+
+	background-color: @progress-bar-color;
+	color: @highlight-color;
+	padding: 10px 0;
+	text-align: center;
+
+	&.show {
+		display: flex;
+	}
+}
+
+.site-notification-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	h1,
+	.h1,
+	h2,
+	.h2,
+	h3,
+	.h3,
+	h4,
+	.h4,
+	h5,
+	.h5,
+	h6,
+	.h6,
+	p,
+	.p {
+		margin: 0;
+	}
+
+	.btn-group {
+		display: inline-block;
+		margin-bottom: 0;
+		margin-left: 15px;
+
+		.btn {
+			margin-bottom: 0;
+		}
+
+		.btn-secondary {
+			&:hover, &:focus, &:active {
+				border-color: @highlight-color;
+				background-color: @highlight-color;
+				color: @secondary-color;
+			}
+		}
+	}
+}

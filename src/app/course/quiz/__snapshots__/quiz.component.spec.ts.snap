@@ -1,0 +1,1025 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`QuizComponent should render normally (no description) 1`] = `
+<app-quiz
+  __ngContext__={[Function LRootView]}
+  _quiz={[Function Object]}
+  currentSelection={[Function String]}
+  layout={[Function String]}
+  locale={[Function String]}
+  mappedQuiz={[Function Object]}
+  questionStatus$={[Function AnonymousSubject]}
+  quizForm={[Function FormGroup]}
+  quizResult$={[Function Store]}
+  quizType={[Function String]}
+  showResultsWhenAvailable={[Function Boolean]}
+  store={[Function MockStore]}
+  takingQuiz="false"
+  userDataService={[Function MockUserDataService]}
+>
+  <div
+    class="quiz-wrapper"
+  >
+    <p />
+    <form
+      class="ng-untouched ng-pristine ng-invalid"
+      id="question-form"
+      novalidate=""
+    >
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="remaining-questions"
+      >
+        <div>
+          0/1 questions are answered
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</app-quiz>
+`;
+
+exports[`QuizComponent should render normally (question extra) 1`] = `
+<app-quiz
+  __ngContext__={[Function LRootView]}
+  _quiz={[Function Object]}
+  currentSelection={[Function String]}
+  layout={[Function String]}
+  locale={[Function String]}
+  mappedQuiz={[Function Object]}
+  questionStatus$={[Function AnonymousSubject]}
+  quizForm={[Function FormGroup]}
+  quizResult$={[Function Store]}
+  quizType={[Function String]}
+  showResultsWhenAvailable={[Function Boolean]}
+  store={[Function MockStore]}
+  takingQuiz="false"
+  userDataService={[Function MockUserDataService]}
+>
+  <div
+    class="quiz-wrapper"
+  >
+    <p />
+    <form
+      class="ng-untouched ng-pristine ng-invalid"
+      id="question-form"
+      novalidate=""
+    >
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="extra-details"
+        >
+          This is Extra
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="remaining-questions"
+      >
+        <div>
+          0/1 questions are answered
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</app-quiz>
+`;
+
+exports[`QuizComponent should render normally (quiz description and question extra) 1`] = `
+<app-quiz
+  __ngContext__={[Function LRootView]}
+  _quiz={[Function Object]}
+  currentSelection={[Function String]}
+  layout={[Function String]}
+  locale={[Function String]}
+  mappedQuiz={[Function Object]}
+  questionStatus$={[Function AnonymousSubject]}
+  quizForm={[Function FormGroup]}
+  quizResult$={[Function Store]}
+  quizType={[Function String]}
+  showResultsWhenAvailable={[Function Boolean]}
+  store={[Function MockStore]}
+  takingQuiz="false"
+  userDataService={[Function MockUserDataService]}
+>
+  <div
+    class="quiz-wrapper"
+  >
+    <p />
+    <div
+      class="quiz-description"
+    >
+      <p>
+        Desc
+      </p>
+      <p>
+        <img
+          alt="test"
+          src="https://placehold.it/12x12"
+        />
+      </p>
+    </div>
+    <form
+      class="ng-untouched ng-pristine ng-invalid"
+      id="question-form"
+      novalidate=""
+    >
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="extra-details"
+        >
+          This is Extra 2
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="remaining-questions"
+      >
+        <div>
+          0/1 questions are answered
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</app-quiz>
+`;
+
+exports[`QuizComponent should render normally (quiz description) 1`] = `
+<app-quiz
+  __ngContext__={[Function LRootView]}
+  _quiz={[Function Object]}
+  currentSelection={[Function String]}
+  layout={[Function String]}
+  locale={[Function String]}
+  mappedQuiz={[Function Object]}
+  questionStatus$={[Function AnonymousSubject]}
+  quizForm={[Function FormGroup]}
+  quizResult$={[Function Store]}
+  quizType={[Function String]}
+  showResultsWhenAvailable={[Function Boolean]}
+  store={[Function MockStore]}
+  takingQuiz="false"
+  userDataService={[Function MockUserDataService]}
+>
+  <div
+    class="quiz-wrapper"
+  >
+    <p />
+    <div
+      class="quiz-description"
+    >
+      Test Description
+    </div>
+    <form
+      class="ng-untouched ng-pristine ng-invalid"
+      id="question-form"
+      novalidate=""
+    >
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <fieldset
+        class="form-group"
+        role="radiogroup"
+        tabindex="0"
+      >
+        <label
+          class="quiz-question-label"
+          id="question-mockQuizQuestionId-label"
+        >
+          mockQuizQuestion
+        </label>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_1-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_1-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_1-input"
+            id="question-mockQuizQuestionId-option_1-label"
+          >
+            mockOption1
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_2-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_2-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_2-input"
+            id="question-mockQuizQuestionId-option_2-label"
+          >
+            mockOption2
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_3-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_3-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_3-input"
+            id="question-mockQuizQuestionId-option_3-label"
+          >
+            mockOption3
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_4-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_4-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_4-input"
+            id="question-mockQuizQuestionId-option_4-label"
+          >
+            mockOption4
+          </label>
+        </div>
+        <div
+          class="form-check"
+        >
+          <input
+            aria-labelledby="question-mockQuizQuestionId-label question-mockQuizQuestionId-option_5-label"
+            class="form-check-input ng-untouched ng-pristine ng-invalid"
+            id="question-mockQuizQuestionId-option_5-input"
+            role="radio"
+            type="radio"
+          />
+          <label
+            class="form-check-label"
+            for="question-mockQuizQuestionId-option_5-input"
+            id="question-mockQuizQuestionId-option_5-label"
+          >
+            mockOption5
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="remaining-questions"
+      >
+        <div>
+          0/1 questions are answered
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        disabled=""
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</app-quiz>
+`;

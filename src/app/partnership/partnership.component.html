@@ -1,0 +1,253 @@
+<ng-container  *ngIf="userStatus$ | async as userStatus">
+<main id="main-content" *ngIf="partnership$ | async as partnership; else dummyContent">
+	<div class="container-fluid px-0 banner-wrapper bg-highlight-primary" [ngStyle]="{'background-image': partnership.banner_image?.url ? 'url(\'' + partnership.banner_image?.url + '?w=1600\')' : 'none'}">
+		<div class="row no-gutters banner-content">
+			<div class="container py-5">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h1 class="h1 sr-only">Hillsdale College partnership with {{ partnership.partner_name }}</h1>
+						<p class="h1 banner-title" [innerHTML]="partnership.banner_title"></p>
+
+						<div *ngIf="partnership.partner_logo" class="row my-4 justify-content-center">
+							<div class="px-4 col-md-auto text-center text-md-right border-md-right">
+								<img src="assets/hillsdale-college-logo-white.svg" alt="Hillsdale College Logo" class="partner-logo">
+							</div>
+							<div class="px-4 col-md-auto text-center text-md-left">
+								<img [src]="partnership.partner_logo?.url" alt="{{ partnership.partner_name }} Logo" class="partner-logo">
+							</div>
+						</div>
+
+						<div [innerHTML]="partnership.banner_description"></div>
+
+						<div #bannerCTAEnrollForm>
+							<div class="row justify-content-center">
+								<div class="col">
+									<form [formGroup]="signupForm" class="form" (ngSubmit)="enrollInCourseFromSlug(signupForm)">
+										<div class="form-row">
+											<div class="col-md-6">
+												<div class="form-group">
+													<label for="banner-select-course" id="banner-select-course-label" class="form-label sr-only">Select Course</label>
+													<div class="input-group">
+														<select name="banner-courses" id="banner-select-course" class="form-control" formControlName="courseSlug" required>
+															<option disabled selected value>Select Your Course</option>
+															<option *ngFor="let rec_courses of partnership.recommended_courses" [value]="rec_courses.course?.url_slug">{{rec_courses.course?.title | hcSimpleMd}}</option>
+														</select>
+													</div>
+													<div *ngIf="signupForm.controls['courseSlug'].invalid && (signupForm.controls['courseSlug'].dirty || signupForm.controls['courseSlug'].touched)" class="alert alert-danger">
+														<div *ngIf="signupForm.controls['courseSlug'].errors.required">
+															Please choose a course.
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group">
+													<label id="banner-email-label" for="banner-email" class="form-label sr-only">Email</label>
+													<div class="input-group">
+														<input id="banner-email" type="email" class="form-control"
+															placeholder="Email" aria-label="Email" aria-describedby="banner-email-label"
+															formControlName="email" autoComplete="email" required>
+														<button class="btn btn-secondary btn-allow-invalid-click" type="submit">Get Started</button>
+													</div>
+													<div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)" class="alert alert-danger">
+														<div *ngIf="signupForm.controls['email'].errors.email">
+															Please enter a valid email.
+														</div>
+														<div *ngIf="signupForm.controls['email'].errors.required">
+															Please enter an email.
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-v-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-12" [innerHTML]="partnership.main_content"></div>
+			</div>
+
+			<div class="row text-center justify-content-center">
+				<div class="col-12">
+					<h2 class="h3 text-title-font mt-5" [innerHTML]="partnership.course_cta_text"></h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid p-0 bg-white">
+		<ng-container *ngFor="let rec_course of partnership.recommended_courses; let index = index">
+			<div class="recommended-course row no-gutters" [ngClass]="index % 2 === 0 ? 'image-on-right bg-alternate' : 'image-on-left'">
+				<div class="col-md-5" [ngClass]="index % 2 === 0 ? 'order-md-last' : ''">
+					<div class="tile tile-image r-fill tag-none recommended-course-tile" [ngStyle]="{'background-image': rec_course.custom_image ? 'url(\'' + rec_course.custom_image?.url + '?w=750\')' : 'url(\'' + rec_course.course?.catalog_image?.url + '?w=750\')'}">
+						<div class="tile-content tile-content-fill"></div>
+					</div>
+				</div>
+				<div class="col-md-7 p-3 p-lg-5 align-self-center">
+					<h2 class="h2 my-2" [innerHTML]="rec_course.course?.title | hcSimpleMd"></h2>
+					<div [innerHTML]="rec_course.custom_description?.length ? rec_course.custom_description : rec_course.course?.overview"></div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+
+	<div class="content-v-padding text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<a routerLink="/" fragment="course-offerings" class="btn btn-link">View All Online Courses</a>
+				</div>
+
+				<div *ngIf="router.url === '/partner/radio-citizenship' || router.url === '/partner/charlie-kirk-citizenship'" class="col-12 mt-4">
+					<a href="https://lp.hillsdale.edu/free-pocket-constitution/?utm_medium=radio&utm_campaign=pocketconstitution&sc=MK222RA1" target="_blank" class="btn btn-primary">Looking for Pocket Constitution?<br>Get it here »</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-v-padding bg-highlight-tertiary">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="h2 mb-4">Testimonials</h2>
+				</div>
+			</div>
+
+			<div class="row text-center">
+				<carousel [pauseOnFocus]="true" [interval]="12000" [(activeSlide)]="activeSlideIndex">
+					<slide *ngFor="let testimonial of testimonials$|async">
+						<div class="col-12 testimonial">
+							<h3 class="h3 testimonial-name">{{testimonial.user_name}}</h3>
+							<p class="h4 testimonial-location">{{testimonial.user_location}}</p>
+							<div class="p testimonial-text" [innerHTML]="testimonial.message|hcSimpleMd"></div>
+						</div>
+					</slide>
+				</carousel>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="partnership.faqs && partnership.faqs.length > 0" class="content-v-padding bg-highlight-quaternary">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="h2 mb-4">Frequently Asked Questions</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-12">
+					<div id="faqAccordion" class="accordion">
+						<div class="faq card accordion-item mb-3" *ngFor="let faq of partnership.faqs; let index = index">
+							<div [attr.id]="'faqHeading'+index" class="faq-question bg-highlight-primary accordion-trigger p-0 collapsed">
+								<h3 class="p-0 m-0">
+									<button class="accordion-button bg-transparent border-0 d-block w-100 h3 text-left m-0 p-4 pr-5 rounded-0 dropdown-toggle collapsed" type="button" [innerHTML]="faq.question | hcSimpleMd"
+											data-toggle="collapse" [attr.data-target]="'#faqCollapse'+index" aria-expanded="false" [attr.aria-controls]="'faqCollapse'+index">
+									</button>
+								</h3>
+							</div>
+							<div [attr.id]="'faqCollapse'+index" class="faq-answer accordion-panel collapse"
+								 [attr.aria-labelledby]="'faqHeading'+index" data-parent="#faqAccordion">
+								<div class="accordion-body p-4" [innerHTML]="faq.answer"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-v-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="h2 banner-title" [innerHTML]="partnership.final_cta_title"></h2>
+					<div [innerHTML]="partnership.final_cta_description"></div>
+
+					<div #finalCTAEnrollForm>
+						<div class="row justify-content-center">
+							<form [formGroup]="signupForm2" class="form" (ngSubmit)="enrollInCourseFromSlug(signupForm2)">
+								<div class="form-group">
+									<label for="final-select-course" id="final-select-course-label" class="form-label sr-only">Select Course</label>
+									<div class="input-group">
+										<select name="final-courses" id="final-select-course" class="form-control" formControlName="courseSlug" required>
+											<option disabled selected value>Select Your Course</option>
+											<option *ngFor="let rec_courses of partnership.recommended_courses" [value]="rec_courses.course?.url_slug">{{rec_courses.course?.title | hcSimpleMd}}</option>
+										</select>
+									</div>
+									<div *ngIf="signupForm2.controls['courseSlug'].invalid && (signupForm2.controls['courseSlug'].dirty || signupForm2.controls['courseSlug'].touched)" class="alert alert-danger">
+										<div *ngIf="signupForm2.controls['courseSlug'].errors.required">
+											Please choose a course.
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label id="final-email-label" for="final-email" class="form-label sr-only">Email</label>
+									<div class="input-group">
+										<input id="final-email" type="email" class="form-control"
+											   placeholder="Email" aria-label="Email" aria-describedby="final-email-label"
+											   formControlName="email" autoComplete="email" required>
+										<button class="btn btn-secondary btn-allow-invalid-click" type="submit">Get Started</button>
+									</div>
+									<div *ngIf="signupForm2.controls['email'].invalid && (signupForm2.controls['email'].dirty || signupForm2.controls['email'].touched)" class="alert alert-danger">
+										<div *ngIf="signupForm2.controls['email'].errors.email">
+											Please enter a valid email.
+										</div>
+										<div *ngIf="signupForm2.controls['email'].errors.required">
+											Please enter an email.
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="partnership.additional_partnership_info" class="pt-5 bg-highlight-primary">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div [innerHTML]="partnership.additional_partnership_info"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+</ng-container>
+
+<ng-template #dummyContent>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="dummy-section">
+					<div class="page-title h1 dummy-page-title"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dummy-section">
+			<div class="row">
+				<div class="col-12">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

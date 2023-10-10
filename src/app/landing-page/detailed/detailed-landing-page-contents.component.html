@@ -1,0 +1,115 @@
+	<main id="main-content" class="landing-template-v2" *ngIf="course">
+		<div class="container trailer-container">
+			<div class="landing-page-intro" *ngIf="!hideTrailerOverlay">
+				<h1 class="page-title h1 text-center" tabindex="-1" [innerHTML]="course.title |hcSimpleMd"></h1>
+				<p class="h4 course-sponsor" *ngIf="course.course_sponsor">Generous Sponsorship Provided by <span [innerHTML]="course.course_sponsor|hcSimpleMd"></span></p>
+			</div>
+			<div class="trailer bg-blue">
+				<img *ngIf="course?.catalog_image?.url" [src]="course.catalog_image.url + '?w=1110'" alt="" class="trailer-art">
+				<ng-container *ngIf="course?.course_trailer">
+					<hc-video-player #trailerVideo class="trailer-art trailer-video" [attr.multimedia]="stringifyMM(course.course_trailer)" [ngStyle]="{'z-index': hideTrailerOverlay ? 1: -1}" [attr.player-type-preference]='playerPreference'></hc-video-player>
+				</ng-container>
+				<div class="trailer-overlay" [ngClass]="{'d-none': hideTrailerOverlay}">
+					<button *ngIf="course?.course_trailer" class="btn btn-primary play-button" type="button" (click)="playTrailerVideo()"><span class="sr-only">Play Trailer</span><fa-icon [icon]="faPlay"></fa-icon></button>
+				</div>
+			</div>
+		</div>
+
+		<app-sticky-element class="course-facts-wrapper bg-white" [class.force-unstuck]="forceUnstuck === true">
+			<div class="container">
+				<div class="row text-center course-quick-facts">
+					<div class="col-md-8 alternating-col">
+						<div class="row">
+							<div class="col-md-6">
+								<h2 class="h2 highlight-detail" *ngIf="course.lectures"><fa-icon [icon]="faChalkboardTeacher"></fa-icon> {{ course.lectures.length }} lecture<ng-container *ngIf="course.lectures.length > 1">s</ng-container>
+								</h2>
+							</div>
+							<div class="col-md-6">
+								<h2 class="h2 highlight-detail"><span class="avg-time-note">average lecture time</span><span class="far fa-clock"></span> {{ getAvgLectureDuration(course) }}</h2>
+							</div>
+						</div>
+						<div class="row sticky-title-row bg-white">
+							<div class="col-md-12">
+								<p class="h1 sticky-title" [innerHTML]="course.title | hcSimpleMd"></p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 enroll-col">
+						<form [ngClass]="{'gtm-enroll-form': userStatus.isLoggedIn}">
+							<button class="btn btn-secondary enroll-button" [type]="userStatus.isLoggedIn ? 'submit' : 'button'" (click)="userStatus.isLoggedIn ? enrollInCourse(course) : scrollToEnroll()">
+								{{ getHeaderEnrollButtonText(userStatus) }}
+								<span *ngIf="preEnrollmentActive" class="pre-enroll-button-date">Course {{earlyAccessToken ? 'Early ': ''}}Release on {{getReleaseDate(course) | date: 'M/d/yyyy'}}</span>
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</app-sticky-element>
+
+		<div class="content-v-padding bg-grey">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<h2 class="h2 text-center">Course Overview</h2>
+						<h3 *ngIf="preEnrollmentActive" class="h3 text-center">Coming {{getReleaseDate(course) | date: 'MMMM d, yyyy'}}{{earlyAccessToken ? ' for Early Access': ''}}</h3>
+						<div [innerHtml]="course.overview"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-v-padding container">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="h2 text-center">Course Lectures</h2>
+				</div>
+			</div>
+			<div *ngFor="let lecture of course.lectures; index as i; last as isLast">
+				<div class="row">
+					<div class="col-auto lesson-number">{{i+1}}</div>
+					<div class="col">
+						<h3 class="h3" [innerHTML]="lecture.title | hcSimpleMd"></h3>
+						<div *ngIf="!course.lengthy_course?.length" [innerHTML]="lecture.overview" class="overview"></div>
+					</div>
+				</div>
+				<hr *ngIf="!isLast">
+			</div>
+		</div>
+
+			<div #enrollForm class="bg-grey content-v-padding" *ngIf="!userStatus.isLoggedIn">
+				<div class="container">
+
+					<div class="row">
+						<div class="col-md-8 offset-md-2">
+							<form hcForm [formGroup]="enrollmentForm" class="form gtm-enroll-form" (hcValidSubmit)="enrollInCourse(course)" [loadQueryParams]="true">
+								<p class="text-center">To {{getToEnrollText()}} <strong [innerHTML]="course.title | hcSimpleMd"></strong>, please enter your email&nbsp;address.</p>
+								<div id="optional-enroll-fields" style="display: none;">
+									<div class="form-row">
+										<div class="form-group col-lg-6 offset-lg-3" hc-form-field fieldName="Title" elemId="title" autoComplete="honorific-prefix" fieldType="select" [selectValues]="titleList"></div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-lg-6 offset-lg-3" hc-form-field fieldName="First Name" elemId="firstname" autoComplete="given-name"></div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-lg-6 offset-lg-3" hc-form-field fieldName="Last Name" elemId="lastname" autoComplete="family-name"></div>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-lg-6 offset-lg-3" hc-form-field fieldType="email" fieldName="Email" elemId="email" autoComplete="email" requiredHtml=""></div>
+								</div>
+								<div class="form-row">
+									<div class="col-lg-6 offset-lg-3 text-center">
+										<div class="btn-group my-3">
+											<button #enrollButton class="btn btn-primary btn-allow-invalid-click" type="submit">
+												{{!earlyAccessToken ? "Enroll Now" : "Accept Early Access"}}
+												<span *ngIf="preEnrollmentActive" class="pre-enroll-button-date">Course {{earlyAccessToken ? 'Early ': ''}}Release on {{getReleaseDate(course) | date: 'M/d/yyyy'}}</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+	</main>

@@ -1,0 +1,76 @@
+@import "variables";
+
+.overview {
+	margin-top: 15px;
+	padding: 0 10px 5px;
+}
+
+.soundcloud-embed {
+	margin-bottom: 0.5rem;
+}
+
+textarea.notes {
+	padding: 5px;
+}
+
+
+
+
+/* toggle in label designing */
+.toggle {
+	margin-top: 10px;
+	position : relative ;
+	display : inline-block;
+	width : 70px;
+	height : 32px;
+	background-color: @accent-tan-color;//@secondary-color;
+	border-radius: 30px;
+	border: 2px solid gray;
+}
+
+/* After slide changes */
+.toggle:after {
+	content: '';
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: @primary-color;
+	top: 0;
+	left: 1px;
+	transition:  all 0.5s;
+
+}
+
+
+
+/* Toggle text */
+.toggle p {
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	//padding-left: 3px;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 0;
+	padding-top: 5px;
+}
+
+
+
+
+
+
+/* Checkbox checked effect */
+.checkbox:checked + .toggle::after {
+	left: 35px;
+}
+
+/* Checkbox checked toggle label bg color */
+.checkbox:checked + .toggle {
+	background-color: @accent-gray-color;//green;
+}
+
+/* Checkbox vanished */
+.checkbox {
+	display : none;
+}

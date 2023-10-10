@@ -1,0 +1,92 @@
+<main id="main-content" class="container" *ngIf="pageHelp$ | async as pageHelp">
+	<div class="row mb-3">
+		<div class="col-12">
+			<h1 *ngIf="pageHelp.page_title; else dummyPageTitle" class="page-title" tabindex="-1"
+				[innerHTML]="pageHelp.page_title|hcSimpleMd"></h1>
+			<ng-template #dummyPageTitle>
+				<div class="dummy-section">
+					<div class="page-title" class="h1 dummy-page-title"></div>
+				</div>
+			</ng-template>
+		</div>
+	</div>
+
+	<ng-container *ngIf="pageHelp.main_page_content; else dummyPageContent">
+		<div class="row mb-3">
+			<div *ngFor="let textBlock of pageHelp.main_page_content" class="col-lg-6">
+				<h2 [innerHTML]="textBlock.title|hcSimpleMd"></h2>
+				<div [innerHTML]="textBlock.text"></div>
+			</div>
+		</div>
+
+		<h2 class="h1 text-center mb-3">Frequently Asked Questions</h2>
+		<div class="row mb-3" *ngFor="let faq of pageHelp.faqs">
+			<div class="col-12 faq">
+				<h3 class="question" [innerHTML]="faq.question | hcSimpleMd"></h3>
+				<div class="answer" [innerHTML]="faq.answer"></div>
+			</div>
+		</div>
+	</ng-container>
+	<ng-template #dummyPageContent>
+		<div class="dummy-section">
+			<div class="row mb-3">
+				<div class="col-lg-6">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="h1 text-center mb-3 dummy-title"></div>
+			<div class="row mb-3">
+				<div class="col-12 faq">
+					<div class="question dummy-title"></div>
+					<div class="answer">
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-12 faq">
+					<div class="question dummy-title"></div>
+					<div class="answer">
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-12 faq">
+					<div class="question dummy-title"></div>
+					<div class="answer">
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</main>

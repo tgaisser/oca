@@ -1,0 +1,40 @@
+body,
+input,
+select,
+textarea,
+button,
+.ui-btn {
+	font-family: "Freight Sans Pro Book", Arial, sans-serif; !important;
+}
+
+.ui-header {
+	background-color: #102d51 !important;
+	color: #ffffff;
+}
+
+.form-control > .ui-select,
+.form-control > .ui-input-text,
+.ui-input-text input,
+.ui-input-search input {
+	border-radius: 0 !important;
+}
+
+.form-control>label:not(.validation-error) {
+	color: #102d51 !important;
+	font-weight: 700 !important;
+}
+
+.five9-action-btn {
+	color: #ffffff !important;
+	background-color: #102d51 !important;
+	border-color: #102d51 !important;
+	font-size: 1rem !important;
+	border-radius: 0 !important;
+	transition: all .15s ease-in-out !important;
+}
+
+.five9-action-btn:hover:not(disabled) {
+	color: #ffffff !important;
+	background-color: #0070b9 !important;
+	border-color: #0070b9 !important;
+}

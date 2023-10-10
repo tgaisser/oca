@@ -1,0 +1,47 @@
+<div *ngIf="courseInfo$| async as courseInfo">
+	<div class="row">
+		<div class="col-12">
+			<div class="overall-progress-wrapper">
+				<h3 class="h2">Overall Progress</h3>
+				<div class="progress overall-progress">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="((courseInfo.progress?.progressPercentage || 0) * 100) | number:'1.0-0'" [style.width]="courseInfo.progress.progressPercentage|percent"><span class="progress-text">{{courseInfo.progress?.progressPercentage|percent}}</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mb-3" *ngFor="let content of courseInfo.lectures; index as idx; last as isLast">
+		<div class="col-12">
+			<div class="row align-items-center">
+				<div class="col-auto lesson-number">{{idx+1}}</div>
+				<div class="col content-details">
+					<h4 class="h3 course-title" [innerHTML]="content.title | hcSimpleMd"></h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col lecture-progress-col">
+					<div class="progress lecture-progress">
+						<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="((content.progress?.progressPercentage || 0) * 100) | number:'1.0-0'" [style.width]="content.progress?.progressPercentage|percent"><span class="progress-text">{{content.progress?.progressPercentage|percent}}</span></div>
+					</div>
+					<a class="btn btn-sm btn-primary mt-3" data-dismiss="modal" [routerLink]="['/courses/', courseInfo.url_slug]">
+						<span [ngSwitch]="content.progress?.started">
+							<ng-template [ngSwitchCase]="true">{{content.progress.progressPercentage < 1 ? 'Continue' : 'Review'}}</ng-template>
+							<ng-template [ngSwitchCase]="false">Start</ng-template>
+							<ng-template [ngSwitchCase]="null">Start</ng-template>
+						</span>
+					</a>
+				</div>
+				<div class="col-auto item-progress-col" *ngIf="content.system_type==='lecture'">
+					<div *ngIf="content" class="item-progress">
+						<fa-icon [icon]="faVideo" title="Lecture progress" aria-hidden="true"></fa-icon>
+						<span class="percentage"><span class="sr-only">Lecture progress: </span>{{(content.progress?.progressPercentage || 0) | percent}}</span>
+					</div>
+					<div *ngIf="content.quiz" class="item-progress">
+						<span class="text-icon" title="Quiz score" aria-hidden="true">A+</span>
+						<span class="percentage"><span class="sr-only">Quiz score: </span>{{(content.quiz.progress?.progressPercentage || 0) | percent}}</span>
+					</div>
+				</div>
+			</div>
+			<hr *ngIf="!isLast">
+		</div>
+	</div>
+</div>

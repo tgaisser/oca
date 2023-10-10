@@ -1,0 +1,106 @@
+	<main id="main-content" class="landing-template-v1" *ngIf="course">
+		<div class="container trailer-container my-3">
+			<div class="row">
+				<div *ngIf="displayCountdownTimer" class="text-center mb-3 col-md-12">
+					<h4 class="text-center" [innerHtml]="course.pre_reg_text_above_countdown_timer"></h4>
+					<div class="text-center" [innerHtml]="course.pre_reg_countdown_timer_embed_code"></div>
+				</div>
+				<div class="col-md-12">
+					<div class="landing-page-intro" *ngIf="!hideTrailerOverlay">
+						<h1 class="page-title h2 font-weight-normal text-center" tabindex="-1" [innerHTML]="course.title | hcSimpleMd"></h1>
+					</div>
+
+					<div class="trailer bg-blue" [ngClass]="{'image-only': !course.course_trailer}">
+						<img *ngIf="course.catalog_image?.url" [src]="course.catalog_image.url + '?w=1110'" alt="" class="trailer-art">
+						<ng-container *ngIf="course.course_trailer">
+							<hc-video-player #trailerVideo class="trailer-art trailer-video" [attr.multimedia]="stringifyMM(course.course_trailer)" [ngStyle]="{'z-index': hideTrailerOverlay ? 1: -1}" [attr.player-type-preference]='playerPreference'></hc-video-player>
+						</ng-container>
+						<div class="trailer-overlay" [ngClass]="{'d-none': hideTrailerOverlay}">
+							<button *ngIf="course.course_trailer" class="btn btn-primary play-button" type="button" (click)="playTrailerVideo()"><span class="sr-only">Play Trailer</span><fa-icon [icon]="faPlay"></fa-icon></button>
+						</div>
+					</div>
+
+					<h2 class="h2" [innerHtml]="course.pre_reg_intro_text | hcSimpleMd"></h2>
+					<div class="p" [innerHtml]="course.pre_reg_about_text || course.small_text"></div>
+				</div>
+			</div>
+
+			<ng-container>
+				<div class="row no-gutters mt-3">
+					<div class="col-lg-6">
+						<ng-container *ngIf="displayRegisterOnPage$ | async" class="my-4">
+							<div class="form-row col-12 px-4 py-2">
+								<p class="h4">Welcome! We noticed you don't have an account. Please complete this form to create your FREE account and begin your course today!</p>
+							</div>
+							<app-sign-up
+								[simpleMode]="true"
+								submitText ='Start your course now'
+								[thirdPartySignup]="false"
+								[displayHeader]="false"
+								[displaySignInLink]="false"
+								[putTermsAndConditionsBeneathSubmitButton]="true"
+								[includeSubjectPreference]="false"
+								emailInput={{enrollmentForm.controls.email.value}}>
+							</app-sign-up>
+						</ng-container>
+
+						<ng-container *ngIf="(displayRegisterOnPage$ | async) === false">
+							<h3 class="h4" [innerHtml]="course.pre_reg_form_cta_text | hcSimpleMd"></h3>
+							<ng-container *ngIf="userStatus.isLoggedIn; else loggedOutForm">
+								<form class="form gtm-enroll-form">
+									<p>
+										Signed in as: <strong class="mr-2">{{userStatus.email}}</strong>
+										<a href="javascript:void(0);" (click)="logOut()" class="d-inline-block small">Sign&nbsp;Out</a>
+									</p>
+									<div class="btn-group my-3">
+										<button class="btn btn-primary btn-allow-invalid-click" type="submit" (click)="enrollInCourse(course)">
+											Register now »
+										</button>
+									</div>
+								</form>
+							</ng-container>
+							<ng-template #loggedOutForm>
+								<form hcForm [formGroup]="enrollmentForm" class="form gtm-enroll-form" (hcValidSubmit)="enrollInCourse(course)" [loadQueryParams]="true">
+									<p class="p">To {{getToEnrollText()}} &ldquo;<span [innerHTML]="course.title | hcSimpleMd"></span>,&rdquo; please enter your email&nbsp;address.</p>
+									<div id="optional-enroll-fields" style="display: none;">
+										<div class="form-row">
+											<div class="form-group col-lg-12" hc-form-field fieldName="Title" elemId="title" autoComplete="honorific-prefix" fieldType="select" [selectValues]="titleList"></div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-lg-12" hc-form-field fieldName="First Name" elemId="firstname" autoComplete="given-name"></div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col-lg-12" hc-form-field fieldName="Last Name" elemId="lastname" autoComplete="family-name"></div>
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="form-group col-lg-12" hc-form-field fieldType="email" fieldName="Email" elemId="email" autoComplete="email" requiredHtml="">
+										</div>
+									</div>
+									<div class="form-row">
+										<div class="col-lg-12 text-center">
+											<div class="btn-group my-3">
+												<button class="btn btn-primary btn-allow-invalid-click" type="submit">
+													<span>Register now »</span>
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</ng-template>
+						</ng-container>
+					</div>
+					<div class="col-lg-6">
+						<div class="testimonials">
+							<h3 class="h4">What students say</h3>
+						<div class="testimonial" *ngFor="let testimonial of testimonials$|async">
+							<p class="font-italic" [innerHTML]="testimonial.message|hcSimpleMd"></p>
+							<p class="font-weight-bold">– {{testimonial.user_name || anonymous_user}}</p>
+							<br>
+						</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</main>

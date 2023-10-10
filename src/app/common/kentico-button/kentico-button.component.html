@@ -1,0 +1,14 @@
+<ng-container *ngIf="button.link?.startsWith('/'); else buttonOtherSite">
+	<a [routerLink]="button.link"
+	   [target]="button.open_in_new_tab ? '_blank' : '_self'"
+	   [class]="buttonClasses"
+	   [innerHTML]="button.text"
+	></a>
+</ng-container>
+<ng-template #buttonOtherSite>
+	<a [href]="button.link"
+	   [target]="button.open_in_new_tab ? '_blank' : '_self'"
+	   [class]="buttonClasses"
+	   [innerHTML]="button.text"
+	></a>
+</ng-template>

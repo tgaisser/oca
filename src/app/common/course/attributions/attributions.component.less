@@ -1,0 +1,16 @@
+.dropdown-toggle {
+	padding-right: 2.5rem;
+	white-space: normal;
+
+	&::after {
+		display: block;
+		position: absolute;
+		right: 1.5rem;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+.dropdown-toggle[aria-expanded="true"]::after {
+	transform: translateY(-50%) rotate(180deg);
+}

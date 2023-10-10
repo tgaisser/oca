@@ -1,0 +1,301 @@
+<ng-container *ngIf="userStatus$ | async as userStatus">
+	<main id="main-content" *ngIf="tvAdExt$ | async as tvAdExt; else dummyContent">
+		<div class="container-fluid px-0 banner-wrapper bg-highlight-primary"
+			[ngStyle]="{'background-image': tvAdExt.banner_image?.url ? 'url(\'' + tvAdExt.banner_image?.url + '?w=1600\')' : 'none'}">
+			<div class="row no-gutters banner-content">
+				<div class="container content-v-padding">
+					<div class="row">
+						<div class="col-md-8 offset-md-2 text-center">
+							<h1 class="h1 sr-only">{{ tvAdExt.tv_ad_name }}</h1>
+							<p class="h2 mt-0" [innerHTML]="tvAdExt.banner_cta_title"></p>
+							<div [innerHTML]="tvAdExt.banner_cta_description"></div>
+
+							<div #bannerCTAEnrollForm>
+								<div class="row justify-content-center">
+									<form [formGroup]="signupForm" class="form"
+										(ngSubmit)="enrollInCourseFromSlug(signupForm)">
+										<div class="form-group">
+											<label id="banner-email-label" for="banner-email"
+												class="form-label sr-only">Email</label>
+											<div class="input-group">
+												<input id="banner-email" type="email" class="form-control"
+													placeholder="Email" aria-label="Email"
+													aria-describedby="banner-email-label" formControlName="email"
+													autoComplete="email" required>
+												<button *ngIf="tvAdExt.recommended_courses?.length === 1" class="btn btn-secondary btn-allow-invalid-click"
+													type="submit">Get Started</button>
+											</div>
+											<div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)"
+												class="alert alert-danger">
+												<div *ngIf="signupForm.controls['email'].errors.email">
+													Please enter a valid email.
+												</div>
+												<div *ngIf="signupForm.controls['email'].errors.required">
+													Please enter an email.
+												</div>
+											</div>
+										</div>
+										<div class="form-group" [ngClass]="{'d-none' : tvAdExt.recommended_courses?.length === 1}">
+											<label for="banner-select-course" id="banner-select-course-label"
+												class="form-label sr-only">Select Course</label>
+											<div class="input-group">
+												<select name="banner-courses" id="banner-select-course"
+													class="form-control" formControlName="courseSlug" required>
+													<option disabled selected value>Select Your Course</option>
+													<option *ngFor="let rec_courses of tvAdExt.recommended_courses"
+														[value]="rec_courses.course?.url_slug">
+														{{rec_courses.course?.title | hcSimpleMd}}</option>
+												</select>
+												<button *ngIf="tvAdExt.recommended_courses?.length !== 1" class="btn btn-secondary btn-allow-invalid-click"
+													type="submit">Get Started</button>
+											</div>
+											<div *ngIf="signupForm.controls['courseSlug'].invalid && (signupForm.controls['courseSlug'].dirty || signupForm.controls['courseSlug'].touched)"
+												class="alert alert-danger">
+												<div *ngIf="signupForm.controls['courseSlug'].errors.required">
+													Please choose a course.
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<div class="container trailer-container mt-4" *ngIf="false && tvAdExt.recommended_courses.length <= 1">
+								<div class="trailer-small bg-blue">
+									<img *ngIf="tvAdExt.recommended_courses[0]?.course?.catalog_image?.url" [src]="tvAdExt.recommended_courses[0]?.course.catalog_image.url + '?w=1110'" alt="" class="trailer-art">
+									<ng-container *ngIf="tvAdExt.recommended_courses[0]?.course?.course_trailer">
+										<hc-video-player #trailerVideo class="trailer-art trailer-video" [attr.multimedia]="stringifyMM(tvAdExt.recommended_courses[0]?.course.course_trailer)" [ngStyle]="{'z-index': hideTrailerOverlay ? 1: -1}" [attr.player-type-preference]='playerPreference'></hc-video-player>
+									</ng-container>
+									<div class="trailer-overlay" [ngClass]="{'d-none': hideTrailerOverlay}">
+										<button *ngIf="tvAdExt.recommended_courses[0]?.course?.course_trailer" class="btn btn-primary play-button" type="button" (click)="playTrailerVideo()"><span class="sr-only">Play Trailer</span><fa-icon [icon]="faPlay"></fa-icon></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid bg-highlight-secondary p-3" *ngIf="tvAdExt.donation_cta">
+			<div class="row align-items-center justify-content-center text-center">
+				<div class="col-md-auto">
+					<p class="p m-0" [innerHTML]="tvAdExt.donation_cta.cta_text"></p>
+				</div>
+				<div class="col-md-auto">
+					<a class="btn btn-tertiary m-0" [href]="tvAdExt.donation_cta.cta_button_url" [innerHTML]="tvAdExt.donation_cta.cta_button_text"></a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container-fluid p-0 bg-white" *ngIf="tvAdExt.content_rows?.length">
+			<ng-container *ngFor="let row of tvAdExt.content_rows; let index = index">
+				<div class="recommended-course row no-gutters"
+					[ngClass]="[index % 2 === 0 ? 'image-on-right' : 'image-on-left bg-alternate', row.row_background_color?.length ? 'bg-'+row.row_background_color : '']">
+					<div *ngIf="row.image_content" class="col-md-6" [ngClass]="index % 2 === 0 ? 'order-md-last' : ''">
+						<div class="tile tile-image r-fill tag-none recommended-course-tile"
+							[ngStyle]="{'background-image': 'url(\'' + row.image_content?.url + '?w=750\')'}">
+							<div class="tile-content tile-content-fill"></div>
+						</div>
+					</div>
+					<div class="p-3 p-lg-5 align-self-center" [ngClass]="row.image_content ? 'col-md-6' : 'col-md-12'">
+						<h2 class="h2 my-2" [innerHTML]="row.course?.title | hcSimpleMd"></h2>
+						<div
+							[innerHTML]="row.text_content">
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+
+		<div class="container-fluid p-0 bg-white" *ngIf="tvAdExt.recommended_courses.length > 1">
+			<ng-container *ngFor="let rec_course of tvAdExt.recommended_courses; let index = index">
+				<div class="recommended-course row no-gutters"
+					[ngClass]="index % 2 === 0 ? 'image-on-right' : 'image-on-left bg-alternate'">
+					<div class="col-md-5" [ngClass]="index % 2 === 0 ? 'order-md-last' : ''">
+						<div class="tile tile-image r-fill tag-none recommended-course-tile"
+							[ngStyle]="{'background-image': rec_course.custom_image ? 'url(\'' + rec_course.custom_image?.url + '?w=750\')' : 'url(\'' + rec_course.course?.catalog_image?.url + '?w=750\')'}">
+							<div class="tile-content tile-content-fill"></div>
+						</div>
+					</div>
+					<div class="col-md-7 p-3 p-lg-5 align-self-center">
+						<h2 class="h2 my-2" [innerHTML]="rec_course.course?.title | hcSimpleMd"></h2>
+						<div
+							[innerHTML]="rec_course.custom_description?.length ? rec_course.custom_description : rec_course.course?.overview">
+						</div>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+
+		<div class="container-fluid content-v-padding bg-highlight-quaternary" *ngIf="tvAdExt.logos">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="text-large" [innerHTML]="tvAdExt.logos?.text_content"></div>
+				</div>
+			</div>
+			<div class="row align-items-center justify-content-center">
+				<div class="col-auto p-3" *ngFor="let logo of tvAdExt.logos?.logos">
+					<img [src]="logo.entity_logo_image?.url" [alt]="logo.entity_name">
+				</div>
+			</div>
+		</div>
+
+		<div class="content-v-padding bg-highlight-tertiary">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2 class="h2 mb-4">See what our current students are saying:</h2>
+					</div>
+				</div>
+
+				<div class="row text-center">
+					<carousel [pauseOnFocus]="true" [interval]="12000" [(activeSlide)]="activeSlideIndex">
+						<slide *ngFor="let testimonial of testimonials$|async">
+							<div class="col-12 testimonial">
+								<h3 class="h3 testimonial-name">{{testimonial.user_name}}</h3>
+								<p class="h4 testimonial-location">{{testimonial.user_location}}</p>
+								<div class="p testimonial-text" [innerHTML]="testimonial.message|hcSimpleMd"></div>
+							</div>
+						</slide>
+					</carousel>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-v-padding bg-white" *ngIf="tvAdExt.dvd_cta">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-md">
+						<h2 class="h2" [innerHTML]="tvAdExt.dvd_cta.cta_title"></h2>
+						<div [innerHTML]="tvAdExt.dvd_cta.cta_text"></div>
+						<a class="btn btn-primary" [href]="tvAdExt.dvd_cta.cta_button_url" [innerHTML]="tvAdExt.dvd_cta.cta_button_text"></a>
+					</div>
+					<div class="col-md-auto text-center">
+						<img [src]="tvAdExt.dvd_cta?.course?.dvd_catalog_image?.url + '?w=200'" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="content-v-padding bg-highlight-quaternary">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2 class="h2 mb-4">Frequently Asked Questions</h2>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<div id="faqAccordion" class="accordion">
+							<div class="faq card accordion-item mb-3" *ngFor="let faq of tvAdExt.faqs; let index = index">
+								<div [attr.id]="'faqHeading'+index"
+									class="faq-question bg-highlight-primary accordion-trigger p-0 collapsed">
+									<h3 class="p-0 m-0">
+										<button
+											class="accordion-button bg-transparent border-0 d-block w-100 h3 text-left m-0 p-4 pr-5 rounded-0 dropdown-toggle collapsed"
+											type="button" [innerHTML]="faq.question | hcSimpleMd" data-toggle="collapse"
+											[attr.data-target]="'#faqCollapse'+index" aria-expanded="false"
+											[attr.aria-controls]="'faqCollapse'+index">
+										</button>
+									</h3>
+								</div>
+								<div [attr.id]="'faqCollapse'+index" class="faq-answer accordion-panel collapse"
+									[attr.aria-labelledby]="'faqHeading'+index" data-parent="#faqAccordion">
+									<div class="accordion-body p-4 p" [innerHTML]="faq.answer"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-v-padding">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center">
+						<h2 class="h2 banner-title" [innerHTML]="tvAdExt.final_cta_title"></h2>
+						<div [innerHTML]="tvAdExt.final_cta_description"></div>
+
+						<div #finalCTAEnrollForm>
+							<div class="row justify-content-center">
+								<form [formGroup]="signupForm2" class="form"
+									(ngSubmit)="enrollInCourseFromSlug(signupForm2)">
+									<div class="form-group">
+										<label id="final-email-label" for="final-email"
+											class="form-label sr-only">Email</label>
+										<div class="input-group">
+											<input id="final-email" type="email" class="form-control"
+												placeholder="Email" aria-label="Email"
+												aria-describedby="final-email-label" formControlName="email"
+												autoComplete="email" required>
+											<button *ngIf="tvAdExt.recommended_courses?.length === 1" class="btn btn-secondary btn-allow-invalid-click" type="submit">Get
+												Started</button>
+										</div>
+										<div *ngIf="signupForm2.controls['email'].invalid && (signupForm2.controls['email'].dirty || signupForm2.controls['email'].touched)"
+											class="alert alert-danger">
+											<div *ngIf="signupForm2.controls['email'].errors.email">
+												Please enter a valid email.
+											</div>
+											<div *ngIf="signupForm2.controls['email'].errors.required">
+												Please enter an email.
+											</div>
+										</div>
+									</div>
+									<div class="form-group" [ngClass]="{'d-none' : tvAdExt.recommended_courses?.length === 1}">
+										<label for="final-select-course" id="final-select-course-label"
+											class="form-label sr-only">Select Course</label>
+										<div class="input-group">
+											<select name="final-courses" id="final-select-course" class="form-control"
+												formControlName="courseSlug" required>
+												<option disabled selected value>Select Your Course</option>
+												<option *ngFor="let rec_courses of tvAdExt.recommended_courses"
+													[value]="rec_courses.course?.url_slug">{{rec_courses.course?.title |
+													hcSimpleMd}}</option>
+											</select>
+											<button *ngIf="tvAdExt.recommended_courses?.length !== 1" class="btn btn-secondary btn-allow-invalid-click" type="submit">Get
+												Started</button>
+										</div>
+										<div *ngIf="signupForm2.controls['courseSlug'].invalid && (signupForm2.controls['courseSlug'].dirty || signupForm2.controls['courseSlug'].touched)"
+											class="alert alert-danger">
+											<div *ngIf="signupForm2.controls['courseSlug'].errors.required">
+												Please choose a course.
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</ng-container>
+
+<ng-template #dummyContent>
+	<div class="container my-5">
+		<div class="row">
+			<div class="col-12">
+				<div class="dummy-section">
+					<div class="page-title h1 dummy-page-title"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dummy-section">
+			<div class="row">
+				<div class="col-12">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

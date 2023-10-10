@@ -1,0 +1,63 @@
+<div class="row">
+	<div class="col-12">
+		<h1 class="page-title" tabindex="-1">Account Information</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		<form hcForm [formGroup]="preferencesForm" autocomplete="on" class="form" (hcValidSubmit)="editProfile()">
+			<legend class="h2">Account Settings</legend>
+			<div class="form-row">
+				<div class="form-group col-lg-6" hc-form-field fieldType="select" [selectValues]="emailFrequencyList"
+					 fieldName="Progress Report Frequency" elemId="emailFrequency">
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<div class="col form-check">
+						<input type="checkbox" class="form-check-input" id="prefer-video" formControlName="preferAudioLectures">
+						<label class="form-check-label" for="prefer-video">Play lectures as audio when possible</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col">
+					<div class="col form-check">
+						<input type="checkbox" class="form-check-input" id="data-saver-checkbox" formControlName="dataSaver">
+						<label class="form-check-label" for="data-saver-checkbox">Data Saver: always play videos in low resolution</label>
+					</div>
+				</div>
+			</div>
+<!--			hiding storeAudioOffline because apparently it does not currently work-->
+			<div class="form-row d-none">
+				<div class="col">
+					<div class="col form-check">
+						<input type="checkbox" class="form-check-input" id="offline-audio" formControlName="storeAudioOffline">
+						<label class="form-check-label" for="offline-audio">Store audio versions of current courses for offline use.</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-12">
+					<span class="req-asterisk">* Required fields</span>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-12 text-center">
+					<div class="btn-group">
+						<button class="btn btn-primary" type="submit" [disabled]="loading.loading">Save</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row mt-3">
+	<div class="col-md-8 offset-md-2">
+		<legend class="h2">Course Page Orientation</legend>
+		<p class="p">The course page orientation provides a step-by-step introduction to the tools and features of a course page. To replay this orientation, simply reset the orientation below and navigate to the course of your choice.</p>
+		<button class="btn btn-primary btn-sm" (click)="resetWalkthroughCookies()">Reset Orientation Steps</button>
+	</div>
+</div>

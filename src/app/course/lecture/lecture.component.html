@@ -1,0 +1,27 @@
+<div [ngStyle]="{'display': mediaMode === 'video' ? 'block' : 'none'}">
+	<hc-video-player #lectureVideo class="lecture-video" [attr.player-type-preference]='playerPreference' [attr.force-mobile]='dataSaver'></hc-video-player>
+</div>
+<div [ngStyle]="{'display': mediaMode === 'audio' ? 'block': 'none'}">
+	<app-audio-player #audioPlayer *ngIf="hasInitAudio && showVideo" (audioDownloaded)="onAudioDownload($event)" [audioStartPosition]="videoStartPosition"
+						[contentItem]="lecture" [courseId]="courseId"
+						[trackProgress]="true" [multimedia]="requestedVideo">
+	</app-audio-player>
+</div>
+<div *ngIf="videoLoadFailed" class="text-warning text-center">
+	Video is currently unavailable for this lecture. If this issue persists, <a [href]="'mailto:' + supportEmail + '?subject=Invalid videos for ' + lecture?.title">contact support</a>.
+</div>
+<div class="video-toggle">
+
+	<div class="slide-toggle-switch" (click)="saveMediaMode()">
+		<button (click)="mediaMode = 'video'"><span class="sr-only">Switch to video</span><fa-icon [icon]="faVideo" [fixedWidth]="true"></fa-icon></button>
+		<span class="toggle-switch" [ngClass]="{'on': mediaMode === 'video', 'off': mediaMode === 'audio'}" (click)="mediaMode === 'video' ? mediaMode = 'audio' : mediaMode = 'video'" ></span>
+		<button (click)="mediaMode = 'audio'"><span class="sr-only">Switch to audio</span><fa-icon [icon]="faHeadphones" [fixedWidth]="true"></fa-icon></button>
+	</div>
+
+</div>
+<div class="overview" [innerHTML]="lecture?.overview"></div>
+
+
+<ng-container *ngIf="lecture.attributions?.length">
+	<app-attributions [attributions]="lecture.attributions" [lectureId]="lecture.system_id"></app-attributions>
+</ng-container>

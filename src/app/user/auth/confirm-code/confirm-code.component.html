@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-12">
+		 <h1 class="page-title" tabindex="-1">Confirm your email address</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		 <p>A confirmation link has been sent to your email address. Please open the message and click on the link to start learning.</p>
+		 <form hcForm [formGroup]="confirmForm" class="form" (hcValidSubmit)="confirmCode()">
+			 <div class="form-row">
+				  <div class="form-group col-lg-6 offset-lg-3">
+					  <label for="email">Email</label>
+					  <input id="email" [attr.readonly]="gotEmail ? true: null" type="email" formControlName="email" class="form-control" autocorrect="off" autocapitalize="none">
+					  <hc-form-error [elemHandle]="confirmForm.get('email')" fieldName="Email Address"></hc-form-error>
+				  </div>
+			 </div>
+			 <div class="form-row">
+				  <div class="form-group col-lg-6 offset-lg-3">
+					  <label for="code">6-Digit Confirmation Code</label>
+					  <input id="code" [attr.readonly]="gotCode ? true: null" type="text" formControlName="code" autocomplete="one-time-code" class="form-control">
+					  <hc-form-error [elemHandle]="confirmForm.get('code')" fieldName="Confirm Code"></hc-form-error>
+				  </div>
+			 </div>
+			 <div class="form-row">
+				  <div class="col-lg-6 offset-lg-3 text-center">
+					  <div class="btn-group my-3">
+						  <button class="btn btn-primary" type="submit">Confirm</button>
+					  </div>
+				  </div>
+			 </div>
+			 <p class="text-center">Didn't receive a code? <a href="javascript:void(0)" (click)="sendAgain()">Send again</a></p>
+		 </form>
+	</div>
+</div>

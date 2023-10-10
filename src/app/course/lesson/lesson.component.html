@@ -1,0 +1,83 @@
+<ng-template [ngIf]="lecture">
+	<div [attr.id]="'content-heading-' + lecture.system_codename"
+		(click)="open($event)"
+		class="card-header accordion-trigger collapsed"
+		data-toggle="collapse"
+		tabindex="0"
+		[attr.data-target]="'#content-' + lecture.system_codename"
+		aria-expanded="false"
+		[attr.aria-controls]="'content-' + lecture.system_codename"
+		[ngClass]="{'grayed-out': !allowAccess, 'unbounce-survey-trigger': applyUnbounceSurveyTriggerClass}"
+	>
+		<div class="row align-items-center">
+			<div class="col-md-auto lesson-number" *ngIf="lessonNumber">{{isLive ? '' : ''+lessonNumber}}</div>
+			<div class="col col-md-auto col-md-auto order-md-last content-toggle">
+				<div class="btn-group" role="group" aria-label="Lecture content selection" [ngClass]="currentSelection + '-selected'">
+					<button *ngIf="lecture.multimedia" type="button" class="btn btn-primary lecture" [ngClass]="{'progress-started': lecture.progress?.started, 'progress-completed': lecture.progress?.completed}" (click)="setSelection($event, 'lecture')" title="View Lecture">
+						<span *ngIf="!isLive" class="progress-indicator" [title]="lecture.progress?.completed ? 'Lecture completed' : lecture.progress?.started ? 'Lecture incomplete' : 'Lecture not started'"></span>
+						<img src="assets/icons/vid.svg" alt="">
+						<span class="sr-only">View Lecture Video for <span [innerHTML]="lecture.title | hcSimpleMd"></span></span>
+					</button>
+					<button *ngIf="lecture.quiz" type="button" class="btn btn-primary quiz" [ngClass]="{'progress-started': lecture.quiz.progress?.started, 'progress-completed': lecture.quiz.progress?.completed}" (click)="setSelection($event, 'quiz')" title="View Quiz">
+						<span class="progress-indicator" [title]="lecture.quiz.progress?.completed ? 'Quiz passed' : lecture.quiz.progress?.started ? 'Quiz failed' : 'Quiz not started'"></span>
+						<img src="assets/icons/quiz.svg" alt="">
+						<span class="sr-only">View Quiz for <span [innerHTML]="lecture.title | hcSimpleMd"></span></span>
+					</button>
+					<button *ngIf="lecture.supplementary_videos?.length" type="button" class="btn btn-primary qa" (click)="setSelection($event, 'qa')" title="View Supplementary Videos">
+						<img src="assets/icons/vidPlus.svg" alt="">
+						<span class="sr-only">View Supplementary Videos for <span [innerHTML]="lecture.title | hcSimpleMd"></span></span>
+					</button>
+					<!--button *ngIf="lecture.podcast" type="button" class="btn btn-primary podcast" (click)="setSelection($event, 'podcast')" title="Access Podcast">
+						<span class="fas fa-podcast"></span>
+						<span class="sr-only">Access podcast for <span [innerHTML]="lecture.title | hcSimpleMd"></span></span>
+					</button-->
+				</div>
+			</div>
+			<div class="col-12 col-md content-details">
+				<h3 class="title" [innerHTML]="lecture.title | hcSimpleMd"></h3>
+				<div class="content-properties">
+					<ng-container *ngIf="lecture">
+						<span class="duration">{{ lecture.multimedia?.duration | duration}}</span>
+						<span class="instructor" *ngIf="lecture.instructors && lecture.instructors.length"> &mdash; {{ lecture.instructors[0] | instructorName }}</span>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="lecture-progress-wrapper" [title]="(lecture.progress?.progressPercentage|percent) + ' complete'">
+					<div class="progress lecture-progress">
+						<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="((lecture.progress?.progressPercentage || 0) * 100) | number:'1.0-0'" [style.width]="lecture.progress?.progressPercentage|percent"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="allowAccess"
+		[attr.id]="'content-' + lecture.system_codename"
+		class="accordion-panel collapse"
+		[ngClass]="currentSelection"
+		[attr.aria-labelledby]="'content-heading-' + lecture.system_codename"
+		[attr.data-parent]="'#content-list-' + sessionNumber">
+		<div class="card-body">
+			<div [ngSwitch]="currentSelection">
+				<ng-template ngSwitchCase="lecture" ngSwitchDefault>
+					<app-lecture *ngIf="lecture.multimedia; else contentLoadFailed" [courseId]="courseId" [lecture]="lecture" [showVideo]="currentLessonId === lecture.url_slug"></app-lecture>
+				</ng-template>
+				<div *ngIf="isLive" class="text-center">
+					<button [disabled]="sidebarStatus.isOpen" class="btn btn-secondary" type="button" (click)="openSidebar(sidebarStatus.isOpen)"><span>Open live chat</span></button>
+				</div>
+				<ng-template ngSwitchCase="qa">
+					<app-qa *ngIf="lecture.supplementary_videos?.length; else contentLoadFailed" [courseId]="courseId" [suppVids]="lecture.supplementary_videos" [showVideo]="currentLessonId === lecture.url_slug"></app-qa>
+				</ng-template>
+				<ng-template ngSwitchCase="quiz">
+					<app-quiz *ngIf="lecture.quiz; else contentLoadFailed" [quiz]="lecture.quiz"></app-quiz>
+				</ng-template>
+			</div>
+			<ng-template #contentLoadFailed>
+				<div class="text text-danger">Unable to load content.</div>
+			</ng-template>
+			<ng-content></ng-content>
+		</div>
+	</div>
+</ng-template>

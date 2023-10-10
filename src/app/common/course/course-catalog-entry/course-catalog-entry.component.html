@@ -1,0 +1,14 @@
+<ng-container *ngIf="catalogEntry">
+<p class="h6 course-subjects" *ngIf="showSubjects"><span class="course-subject" *ngFor="let sub of catalogEntry.course_subject; last as isLast">{{sub.name}}<span *ngIf="!isLast">, </span></span></p>
+<a
+	[routerLink]="routerLink" class="tile r-16-9 course-tile"
+	[ngStyle]="{'background-image': catalogEntry?.catalog_image?.url ? 'url(\'' + catalogEntry.catalog_image.url + '?w=604\')' : 'none'}"
+>
+	<app-enrolled-progress-pie-chart *ngIf="!courseIsInPreRegistrationWindow" class="enrolled-indicator" [course]="catalogEntry"></app-enrolled-progress-pie-chart>
+	<span class="badge study-group-badge" *ngIf="studyGroup$|async as studyGroup">Study Group</span>
+	<div class="tile-content">
+		<p *ngIf="courseIsInPreRegistrationWindow" class="coming-soon">Coming {{catalogEntry.publication_date | date: 'M/d/yyyy'}}</p>
+		<h3 class="h4 course-title" [innerHTML]="catalogEntry?.title | hcSimpleMd"></h3>
+	</div>
+</a>
+</ng-container>

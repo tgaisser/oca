@@ -1,0 +1,64 @@
+@import "variables";
+
+.qa-video {
+	margin-bottom: 15px;
+}
+
+.soundcloud-embed {
+	margin-bottom: 0.5rem;
+}
+
+.col-playlist {
+	@media (min-width: 992px) {
+		padding-left: 0;
+	}
+}
+
+#supp-vid-playlist {
+	display: flex;
+	flex-flow: wrap;
+
+	@media (min-width: 992px) {
+		flex-direction: column;
+	}
+}
+
+.supp-vid:not(:disabled):not(.disabled) {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	position: relative;
+
+	padding-bottom: 2rem;
+
+	width: 100%;
+	margin-right: 0;
+	margin-bottom: 15px;
+
+	@media (min-width: 576px) {
+		width: 200px;
+		margin-right: 15px;
+	}
+
+	@media (min-width: 992px) {
+		margin-right: 0;
+	}
+
+	&:hover,
+	&:focus,
+	&.active {
+		background-color: @primary-color;
+		border-color: @primary-color;
+		color: @highlight-color;
+	}
+
+	.metadata {
+		font-family: @subtitle-font;
+		font-size: 0.875rem;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 5px;
+	}
+}

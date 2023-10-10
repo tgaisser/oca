@@ -1,0 +1,97 @@
+@import "variables";
+
+.banner-wrapper {
+	background-size: cover;
+	background-position: center;
+}
+
+.banner-content {
+	padding: 0;
+	background-color: rgba(@primary-color, 50%);
+
+	// padding-top: 150px;
+	min-height: 400px;
+	align-items: center;
+	height: auto;
+}
+
+.banner-title {
+	margin-top: 0;
+}
+
+.border-md-right {
+	@media (min-width: 768px) {
+		border-right: 2px solid white;
+	}
+}
+
+.partner-logo {
+	height: 100px;
+}
+
+.input-group .form-control {
+	min-height: 50px;
+}
+
+.recommended-course {
+	.tile {
+		.tile-content {
+			background: none;
+		}
+	}
+}
+
+.recommended-course-tile {
+	background-position: center;
+	min-height: 400px;
+
+	&::before {
+		padding-top: 75%;
+		background: none;
+	}
+}
+
+.testimonial {
+	.h3.testimonial-name,
+	.h4.testimonial-location {
+		font-family: @body-font;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+	}
+
+	.h4.testimonial-location {
+		color: @accent-gray-color;
+	}
+}
+
+.accordion-button {
+	background-color: @primary-color;
+	color: @highlight-color;
+	border: none;
+	font-family: @subtitle-font;
+
+	&.dropdown-toggle {
+		white-space: normal;
+		position: relative;
+
+		&::after {
+			display: block;
+			position: absolute;
+			right: 1.5rem;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&:not(.collapsed)::after {
+			transform: translateY(-50%) rotate(180deg);
+		}
+	}
+}
+
+.hidden-navbar {
+	@media (max-width: 1199.98px) {
+		.nav-section {
+			width: 100%;
+		}
+	}
+}

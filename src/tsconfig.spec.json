@@ -1,0 +1,24 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/spec",
+    "module": "commonjs",
+    "target": "ES2017",
+    "types": [
+      "jest",
+      "jsdom",
+      "node"
+    ],
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+	"esModuleInterop": true
+  },
+  "files": [
+    "test.helpers.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "**/*.spec.ts",
+    "**/*.d.ts"
+  ]
+}

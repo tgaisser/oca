@@ -1,0 +1,83 @@
+@import "variables";
+
+.donation-bottom-bar {
+	position: fixed;
+	bottom: -100%;
+	left: 0;
+	right: 0;
+	z-index: 800;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: @primary-color;
+	color: @highlight-color;
+	padding: 10px 0;
+	text-align: center;
+
+	transition: all 1s ease-in-out;
+
+	&.show {
+		bottom: 0;
+	}
+}
+
+.donation-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	::ng-deep {
+		h1,
+		.h1,
+		h2,
+		.h2,
+		h3,
+		.h3,
+		h4,
+		.h4,
+		h5,
+		.h5,
+		h6,
+		.h6,
+		p,
+		.p {
+			margin: 0;
+		}
+	}
+
+	.btn-group {
+		display: inline-block;
+		margin-bottom: 0;
+		margin-left: 15px;
+
+		.btn {
+			margin-bottom: 0;
+		}
+
+		.btn-secondary {
+			&:hover, &:focus, &:active {
+				border-color: @highlight-color;
+				background-color: @highlight-color;
+				color: @secondary-color;
+			}
+		}
+	}
+}
+
+.close-donation {
+	display: block;
+	font-size: 2rem;
+	line-height: 2rem;
+	color: @highlight-color;
+	opacity: 1;
+	text-shadow: none;
+
+	&:hover,
+	&:focus,
+	&:active {
+		color: @secondary-color;
+		opacity: 1;
+	}
+}

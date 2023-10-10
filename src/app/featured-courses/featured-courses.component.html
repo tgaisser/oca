@@ -1,0 +1,52 @@
+<div class="featured-container" (swipeleft)="changeSlide('next')" (swiperight)="changeSlide('prev')">
+	<carousel [pauseOnFocus]="true" [interval]="0" [(activeSlide)]="activeSlideIndex" [itemsPerSlide]="1">
+		<ng-container  *ngIf="courses; else dummySlide">
+		<slide *ngFor="let highlightedCourse of courses" style="max-width: 400px;">
+			<div class="p-3" *ngIf="highlightedCourse">
+				<ng-container *ngIf="highlightedCourse?.course_trailer; else backupThumbnail">
+					<div class="featured-image-wrapper responsive-video-wrapper" [ngStyle]="{'background-image': highlightedCourse?.catalog_image && highlightedCourse?.catalog_image?.url ? 'url(\'' + highlightedCourse?.catalog_image?.url + '?w=604\')' : 'none'}">
+						<img *ngIf="highlightedCourse?.catalog_image?.url" [src]="highlightedCourse.catalog_image.url + '?w=604'" alt="" class="mobile-only-image">
+						<div class="bg-fade">
+							<button class="btn btn-primary play-button view-trailer" type="button" (click)="loadTrailerVideo(highlightedCourse)" data-toggle="modal" data-target="#trailerModal"><span class="sr-only">Play Trailer</span><fa-icon [icon]="faPlay"></fa-icon></button>
+						</div>
+					</div>
+				</ng-container>
+				<ng-template #backupThumbnail>
+					<div class="featured-image-wrapper responsive-video-wrapper" [ngStyle]="{'background-image': highlightedCourse?.catalog_image && highlightedCourse?.catalog_image?.url ? 'url(\'' + highlightedCourse?.catalog_image?.url + '?w=604\')' : 'none'}">
+						<img *ngIf="highlightedCourse?.catalog_image?.url" [src]="highlightedCourse.catalog_image.url + '?w=604'" alt="" class="mobile-only-image">
+						<div class="bg-fade"></div>
+					</div>
+				</ng-template>
+
+				<h3 class="h5 highlighted-title" [innerHTML]="highlightedCourse.title | hcSimpleMd"></h3>
+				<div class="btn-group mb-0">
+					<a [routerLink]="['/landing', highlightedCourse.url_slug]" class="btn btn-primary btn-small" [innerHtml]="getButtonText(highlightedCourse)"></a>
+				</div>
+			</div>
+		</slide>
+		</ng-container>
+		<ng-template #dummySlide>
+			<slide class="dummy-section">
+				<div class="p-3">
+					<div class="featured-image-wrapper responsive-video-wrapper dummy-image">
+						<div class="bg-fade"></div>
+					</div>
+					<div class="h5 highlighted-title dummy-title">&nbsp;</div>
+					<div class="btn-group mb-0">
+						<div class="btn btn-primary btn-small"></div>
+					</div>
+				</div>
+		</slide>
+		</ng-template>
+	</carousel>
+</div>
+
+<div class="modal fade" id="trailerModal" tabindex="-1" role="dialog" aria-labelledby="trailerModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<hc-video-player #trailerModalVideo [attr.multimedia]="selectedMMString" [attr.player-type-preference]='playerPreference'></hc-video-player>
+			</div>
+		</div>
+	</div>
+</div>

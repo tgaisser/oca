@@ -1,0 +1,10 @@
+<p id="attributions-header-{{lectureId}}" class="mb-0 dropdown-toggle" data-toggle="collapse"
+	aria-expanded="false" [attr.data-target]="'#attributions-list-' + lectureId"
+	[attr.aria-controls]="'attributions-list-' + lectureId" style="cursor:pointer; display:inline-block; padding-right:2.5rem; position:relative;">
+	Attributions
+</p>
+<div id="attributions-list-{{lectureId}}" class="collapse" aria-labelledby="attributions-header">
+	<div class="row ml-1" style="overflow-y:scroll; overflow-x:hidden; max-height:120px;">
+		<div class="col-12" *ngFor="let cc of attributions" app-creative-credit [creativeCredit]="cc"></div>
+	</div>
+</div>

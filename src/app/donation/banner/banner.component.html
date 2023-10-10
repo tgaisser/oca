@@ -1,0 +1,24 @@
+<ng-container *ngIf="donationService.donationVisible$ | async as visibleStatus">
+	<div *ngIf="donationService.currentOptions?.displayType === 'banner'" class="donation-banner" [class.show]="visibleStatus.visible">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<div class="donation-content row align-items-center">
+						<div [innerHtml]="donationService.currentOptions?.donationBody" class="col-md"></div>
+
+						<div class="col-md-auto p-md-0">
+							<div *ngIf="donationService.currentOptions?.donationButtons && donationService.currentOptions?.donationButtons.length > 0" class="btn-group">
+								<a *ngFor="let button of donationService.currentOptions?.donationButtons" class="btn btn-secondary" [href]="button.buttonLink" [target]="button.buttonTarget">{{button.buttonText}}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto">
+					<button (click)="donationService.close()" class="close-donation" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-container>

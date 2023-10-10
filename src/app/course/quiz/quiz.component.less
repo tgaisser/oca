@@ -1,0 +1,142 @@
+@import "variables";
+
+.quiz-wrapper {
+	@media (min-width: 768px) {
+		padding-left: 50px;
+	}
+
+	.final-quiz-buttons {
+		.show-results-btn {
+			//border-right: 1px solid darkgray;
+		}
+	}
+}
+
+#question-form,
+.quiz-results {
+	counter-reset: line-number;
+}
+
+#question-form fieldset.form-group,
+.quiz-results .question {
+	counter-increment: line-number;
+	position: relative;
+	padding-left: 25px;
+}
+
+#question-form fieldset.form-group:before,
+.quiz-results .question:before {
+	content: counter(line-number);
+	font-family: @subtitle-font;
+	font-weight: bold;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 25px;
+	padding-right: 5px;
+	text-align: center;
+}
+
+.quiz-question-label,
+.form-check-label {
+	font-weight: normal;
+}
+
+#question-form .remaining-questions {
+	font-style: italic;
+	font-size: .875rem;
+	color: #333;
+}
+
+.quiz-results {
+	.question-answer-location {
+		font-style: italic;
+		margin: 10px 0;
+		padding: 5px 10px;
+		display: inline-block;
+
+		//color: #856404;
+		background-color: #fff3cd;
+		border: 1px solid #ffeeba;
+
+		.timestamp-desc {
+			margin-left: 5px;
+		}
+	}
+
+	.answer {
+		margin: 3px 0;
+
+		&::before {
+			content: "\00A0";
+			display: inline-block;
+			margin-right: 8px;
+
+			width: 26px;
+			text-align: center;
+			border-radius: 50%;
+			height: 26px;
+			line-height: 26px;
+			font-size: 1rem;
+			font-weight: bold;
+		}
+
+		.answer-text {
+			display: inline-block;
+			padding: 0px 5px;
+			border: 1px solid transparent;
+			max-width: calc(100% - 35px);
+		}
+
+		&.selected:not(.correct) .answer-text::after, &.correct:not(.selected) .answer-text::after {
+			font-size: .875em;
+			border-radius: 1px;
+			padding: 0 2px;
+			border: .5px dashed lightgray;
+			margin-left: 10px;
+		}
+		&.selected:not(.correct) .answer-text::after {
+			content: 'Your answer';
+			background-color: #ffffffbb;
+		}
+		&.correct:not(.selected) .answer-text::after {
+			content: 'Correct answer';
+			background-color: #b7ecb04a;
+		}
+
+		&.selected {
+			.answer-text {
+				color: #721c24;
+				background-color: #f8d7da;
+				border-color: #f5c6cb;
+			}
+
+			&.correct {
+				.answer-text {
+					color: #155724;
+					background-color: #d4edda;
+					border-color: #c3e6cb;
+				}
+			}
+
+			&::before {
+				content: "✗";
+				background-color: #721c24;
+				color: #fff;
+			}
+		}
+
+		&.correct {
+			&::before {
+				content: "✓";
+				background-color: #155724;
+				color: #fff;
+			}
+		}
+
+	}
+
+	.question {
+		margin-bottom: 30px;
+	}
+}

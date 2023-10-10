@@ -1,0 +1,71 @@
+<ng-container *ngIf="courseAndUser$ | async as courseAndUser">
+
+		<app-detailed-landing-page-contents
+			*ngIf="pageVersion === 'detailed'; else quotes" 
+			[course]="courseAndUser.course"
+			[userStatus]="courseAndUser.userStatus"
+			[preEnrollmentActive]="preEnrollmentActive"
+		>
+		</app-detailed-landing-page-contents>
+
+	<ng-template #quotes>
+		<app-quotes-landing-page-contents
+				*ngIf="pageVersion === 'quotes'; else testimonials"
+				[course]="courseAndUser.course"
+				[userStatus]="courseAndUser.userStatus"
+				[preEnrollmentActive]="preEnrollmentActive"
+			>
+		</app-quotes-landing-page-contents>
+	</ng-template> 
+
+	<ng-template #testimonials>
+		<app-testimonials-landing-page-contents
+				*ngIf="pageVersion === 'testimonials'; else topRegistration"
+				[course]="courseAndUser.course"
+				[userStatus]="courseAndUser.userStatus"
+				[preEnrollmentActive]="preEnrollmentActive"
+			>
+		</app-testimonials-landing-page-contents>
+	</ng-template>
+
+	<ng-template #topRegistration>
+		<app-top-registration-landing-page-contents
+				*ngIf="pageVersion === 'top-registration'; else altLayout"
+				[course]="courseAndUser.course"
+				[userStatus]="courseAndUser.userStatus"
+				[preEnrollmentActive]="preEnrollmentActive"
+			>
+		</app-top-registration-landing-page-contents>
+	</ng-template>
+
+	<ng-template #altLayout>
+		<app-alt-layout-landing-page-contents
+			*ngIf="pageVersion === 'sales-challenger'; else preReg"
+			[course]="courseAndUser.course"
+			[userStatus]="courseAndUser.userStatus"
+			[preEnrollmentActive]="preEnrollmentActive"
+		>
+		</app-alt-layout-landing-page-contents>
+	</ng-template>
+
+	<ng-template #preReg>
+		<app-pre-registration-landing-page-contents
+			*ngIf="pageVersion === 'prereg'; else defaultLanding"
+			[course]="courseAndUser.course"
+			[userStatus]="courseAndUser.userStatus"
+			[preEnrollmentActive]="preEnrollmentActive"
+		>
+		</app-pre-registration-landing-page-contents>
+	</ng-template>
+
+	<ng-template #defaultLanding>
+		<app-default-landing-page-contents
+			[pageVersion]="pageVersion"
+			[course]="courseAndUser.course"
+			[userStatus]="courseAndUser.userStatus"
+			[preEnrollmentActive]="preEnrollmentActive"
+		>
+		</app-default-landing-page-contents>
+	</ng-template>
+
+</ng-container>

@@ -1,0 +1,155 @@
+<div class="modal-header">
+	<h4 class="modal-title" id="modal-title">Found Matching Accounts</h4>
+	<button type="button" class="close" aria-describedby="modal-title" (click)="modal.hide()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body" [ngSwitch]="mode">
+	<ng-container *ngSwitchCase="INVALID_CONFIG">
+		<p>It appears you have created multiple Hillsdale Accounts using the same email address.
+			In order for us to provide you the best possible experience, please <a routerLink="faq" (click)="modal.hide()">contact support</a> to have them help you merge these accounts.</p>
+
+		<div class="table-responsive">
+			<table class="accounts table table-sm">
+				<thead>
+				<tr>
+					<th>Type</th>
+					<th>Associated Email</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr *ngFor="let account of matchingAccounts">
+					<td class="image-col" [ngSwitch]="account.type">
+						<fa-icon *ngSwitchCase="'Facebook'" [icon]="faFacebook"></fa-icon>
+						<img *ngSwitchCase="'Google'" src="assets/g-logo.png" alt="Google SignIn" />
+						<fa-icon *ngSwitchCase="'Email'"  [icon]="faAt"></fa-icon>
+					</td>
+					<td>
+						{{account.email}}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</ng-container>
+	<ng-container *ngSwitchCase="PROMPT_MODE">
+
+	<p>This email address is connected to multiple accounts. This occurs sometimes when users create an account in our system and also sign in with Facebook and/or Google.</p>
+	<ul>
+		<li>If you would like to leave these accounts separate (with different enrollments and progress), click &lsquo;Leave Accounts Separate.&rsquo;</li>
+		<li>If you would like to be able to log into this account via any of these login-mechanisms, please select the accounts you would like to link below and click &lsquo;Link Accounts.&rsquo;
+			Your course history and progress will be merged and synced between these logins moving forward.</li>
+	</ul>
+	<div class="table-responsive">
+	<table class="accounts table table-sm">
+		<thead>
+			<tr>
+				<th>Type</th>
+				<th>Associated Email</th>
+				<th>Link to current</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let account of matchingAccounts">
+				<td class="image-col" [ngSwitch]="account.type">
+					<fa-icon *ngSwitchCase="'Facebook'" [icon]="faFacebook"></fa-icon>
+					<img *ngSwitchCase="'Google'" src="assets/g-logo.png" alt="Google SignIn" />
+					<fa-icon *ngSwitchCase="'Email'"  [icon]="faAt"></fa-icon>
+				</td>
+				<td>
+					{{account.email}}
+				</td>
+				<td>
+					<label class="form-check">
+						<input type="checkbox" [(ngModel)]="account.selected" class="form-check-input" [disabled]="account.current" [readOnly]="account.current"/>
+						{{account.current ? '(current)' : 'Link'}}
+					</label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	</ng-container>
+	<ng-container *ngSwitchCase="CONFIRM_PROMPT_MODE">
+		You are about to link these accounts together.
+		<div *ngFor="let account of linkedAccounts">
+			<span class="image-col" [ngSwitch]="account.type">
+				<fa-icon *ngSwitchCase="'Facebook'" [icon]="faFacebook"></fa-icon>
+				<img *ngSwitchCase="'Google'" src="assets/g-logo.png" alt="Google SignIn" />
+				<fa-icon *ngSwitchCase="'Email'"  [icon]="faAt"></fa-icon>
+			</span>
+			{{account.email}}
+		</div>
+
+		<div style="margin-top: 20px" *ngIf="nonLinkedAccounts.length">
+			<ng-container [ngPlural]="nonLinkedAccounts.length">
+				<ng-template ngPluralCase="=1">This account</ng-template>
+				<ng-template ngPluralCase="other">These accounts</ng-template>
+			</ng-container> will remain separate.
+
+			<div *ngFor="let account of nonLinkedAccounts">
+				<span class="image-col" [ngSwitch]="account.type">
+					<fa-icon *ngSwitchCase="'Facebook'" [icon]="faFacebook"></fa-icon>
+					<img *ngSwitchCase="'Google'" src="assets/g-logo.png" alt="Google SignIn" />
+					<fa-icon *ngSwitchCase="'Email'"  [icon]="faAt"></fa-icon>
+				</span>
+				{{account.email}}
+			</div>
+		</div>
+	</ng-container>
+	<ng-container *ngSwitchCase="NONLINK_PROMPT_MODE">
+		You have decided to not link accounts. We will not prompt you again.
+	</ng-container>
+	<ng-container *ngSwitchCase="CONFIRMATION_MODE">
+		<ng-container *ngIf="linkedAccounts.length; else nonLinkConfirm">
+			Your accounts are now linked. You can sign into your account using any of the following methods:
+
+			<div class="accounts">
+				<div *ngFor="let account of linkedAccounts">
+					<ng-container *ngIf="account.selected">
+						<span class="image-col" [ngSwitch]="account.type">
+							<fa-icon *ngSwitchCase="'Facebook'" [icon]="faFacebook"></fa-icon>
+							<img *ngSwitchCase="'Google'" src="assets/g-logo.png" alt="Google SignIn" />
+							<fa-icon *ngSwitchCase="'Email'"  [icon]="faAt"></fa-icon>
+						</span>
+						{{account.email}}
+					</ng-container>
+				</div>
+			</div>
+		</ng-container>
+		<ng-template #nonLinkConfirm>
+			Your preferences have been saved.
+		</ng-template>
+
+		<h5>In order to complete the process, you must log back in to the application. Please click "Done" to be taken to the sign-in page.</h5>
+		<h6>
+			You will be automatically signed-out in
+			<span *ngIf="redirectTimer$ | async as timeTicked; else timerText">{{TIME_BEFORE_SIGNOUT - timeTicked}}</span>
+			<ng-template #timerText>{{TIME_BEFORE_SIGNOUT}}</ng-template>
+			seconds.
+		</h6>
+	</ng-container>
+</div>
+<div class="modal-footer" [ngSwitch]="mode">
+	<ng-container *ngSwitchCase="INVALID_CONFIG">
+		<button type="button" class="btn btn-link" (click)="modal.hide()">Remind Me Later</button>
+		<a class="btn btn-primary" routerLink="/faq" (click)="modal.hide()">Contact Support</a>
+	</ng-container>
+	<ng-container *ngSwitchCase="PROMPT_MODE">
+		<button type="button" class="btn btn-outline-danger" (click)="doNothing()">Leave Accounts Separate</button>
+		<button type="button" class="btn btn-primary" (click)="merge()" [disabled]="linkedAccounts.length === 1"><fa-icon [icon]="faLink"></fa-icon> Link Accounts</button>
+		<button type="button" class="btn btn-link" (click)="modal.hide()">Remind Me Later</button>
+	</ng-container>
+	<ng-container *ngSwitchCase="CONFIRM_PROMPT_MODE">
+		<button type="button" class="btn btn-outline-primary" (click)="backToPrompt()">Back</button>
+		<button type="button" class="btn btn-primary" (click)="confirmLink()"><fa-icon [icon]="faLink"></fa-icon> Finish</button>
+	</ng-container>
+	<ng-container *ngSwitchCase="NONLINK_PROMPT_MODE">
+		<button type="button" class="btn btn-outline-primary" (click)="backToPrompt()">Back</button>
+		<button type="button" class="btn btn-primary" (click)="confirmNonLink()">Finish</button>
+	</ng-container>
+	<ng-container *ngSwitchCase="CONFIRMATION_MODE">
+		<button type="button" class="btn btn-primary" (click)="done()">Done</button>
+	</ng-container>
+</div>

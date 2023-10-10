@@ -1,0 +1,205 @@
+@import 'variables';
+
+@controlsBackground: rgba(34, 34, 34, 0.8);
+
+@playBarHeight: 60px;
+
+.audio-wrapper {
+	border: 1px solid @accent-gray-color;
+	position: relative;
+}
+.audio-player {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: @playBarHeight;
+	//border: 1px solid @accent-gray-color;
+	padding: 5px 15px;
+	border-radius: 2px;
+
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: rgba(1, 1, 1, 0.3);
+
+	fa-icon {
+		color: white;
+	}
+}
+.skip-controls button, .volume-control button, .rate-control button, .settings button {
+	background: transparent;
+	border: none;
+}
+.play-timer {
+	font-family: Arial, serif;
+	font-size: .9em;
+	color: white;
+}
+.play-control button {
+	border-width: 0;
+	background: transparent;
+	color: white;
+	padding: 3px 10px 3px 12px;
+}
+.rate-control {
+	font-family: arial, sans-serif;
+	position: relative;
+
+	span {
+		color: white;
+	}
+	.rate-num {
+		font-size: 0.9em;
+	}
+	.rate-suffix {
+		font-size: .9em;
+		vertical-align: bottom;
+	}
+	.rate-list {
+		position: absolute;
+		display: none;
+		bottom: 25px;
+		background: rgba(5, 5, 12, 0.3);
+		color: white;
+		width: 35px;
+
+		a {
+			display: block;
+			font-size: 1.1em;
+
+			&.current {
+				font-weight: bold;
+			}
+		}
+	}
+	&:hover .rate-list {
+		display: block;
+	}
+}
+
+.volume-control {
+	position: relative;
+
+	.slider {
+		width: 100px;
+		position: absolute;
+		bottom: 25px;
+		left: -37px;
+		background-color: @controlsBackground;
+
+		input[type="range"] {
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 484px) {
+		display: none;
+	}
+}
+
+.desktop-settings {
+	.rate-control {
+		margin-right: 10px;
+	}
+}
+.settings {
+	position: relative;
+
+	.details {
+		position: absolute;
+		bottom: 35px;
+		background-color: @controlsBackground;
+		width: 40px;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		left: -8px;
+	}
+}
+
+.waveform {
+	width: 65%;
+	position: relative;
+}
+
+
+.audio-preview-image {
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	background-color: @primary-color;
+
+	&:before {
+		content: "";
+		display: block;
+		padding-top: 56.25%;
+	}
+
+	fa-icon.loading-spinner {
+		color: white;
+		position: absolute;
+		top: calc(50% - (@playBarHeight/2) - 3rem);
+		left: calc(50% - 3rem);
+		font-size: 6rem;
+	}
+
+	.skip-control {
+		appearance: none;
+		background: rgba(1, 1, 1, 0.7);
+		padding: 10px;
+		border-radius: 50%;
+		border: 0;
+		position: absolute;
+		top: calc(50% - (@playBarHeight / 2) - 50px);
+		height: 100px;
+		width: 100px;
+
+		&.skip-back {
+			left: 10%;
+		}
+
+		&.skip-forward {
+			right: 10%;
+		}
+
+		svg {
+			fill: white;
+			height: 100%;
+		}
+
+		@media (max-width: 767px) {
+			top: calc(50% - (@playBarHeight / 2) - 30px);
+			height: 60px;
+			width: 60px;
+		}
+	}
+
+	.play-control {
+		position: absolute;
+		top: calc(50% - (@playBarHeight / 2) - 32px);
+		left: calc(50% - 32px);
+		width: 65px;
+		height: 65px;
+		border-radius: 50%;
+		background-color: rgba(0, 0, 0, 0.7);
+		//text-align: center;
+		justify-content: center;
+	}
+
+	.play-control button {
+		border: 0;
+		font-size: 30px;
+		background: transparent;
+		text-align: center;
+		padding: 0;
+
+		.play-icon {
+			margin-left: 5px;
+		}
+	}
+}
+
+.btn-group .btn {
+	margin-right: 0;
+
+}
+

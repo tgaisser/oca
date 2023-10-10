@@ -1,0 +1,72 @@
+<div class="row">
+	<div class="col-12">
+		<h1 class="page-title" tabindex="-1">My Courses</h1>
+	</div>
+</div>
+
+<ng-template [ngIf]="courses$ | async" let-courses [ngIfElse]="noCourses">
+	<div class="row mb-5" *ngIf="coursesInProgress.length > 0">
+		<div class="col-md-8 offset-md-2">
+			<h2 class="h2 section-header">In progress</h2>
+			<div class="mb-4 my-course" *ngFor="let course of coursesInProgress">
+				<h3 class="h3" [innerHTML]="course.title | hcSimpleMd"></h3>
+				<div *ngIf="userHasFullCourseAccess(course)" class="progress mb-2">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="((course.progress?.progressPercentage || 0) * 100) | number:'1.0-0'" [style.width]="course.progress.progressPercentage|percent"><span class="progress-text">{{course.progress.progressPercentage|percent}}</span></div>
+				</div>
+				<h4 *ngIf="!userHasFullCourseAccess(course)" class="h4">Coming {{course.publication_date | date: 'MMMM d, yyyy'}}</h4>
+				<div class="btn-group">
+					<a class="btn btn-sm btn-primary" [routerLink]="['/courses/', course.url_slug]">Go to Course</a>
+					<button *ngIf="userHasFullCourseAccess(course)" class="btn btn-sm btn-primary" type="button" (click)="selectedCourse = course" data-toggle="modal" data-target="#progress-modal">Detailed Progress</button>
+					<button class="btn btn-sm btn-outline-danger leave-button" type="button" (click)="leaveCourse(course)">Leave Course</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" *ngIf="coursesCompleted.length > 0">
+		<div class="col-md-8 offset-md-2">
+			<h2 class="h2 section-header">Completed</h2>
+			<div class="mb-4 my-course" *ngFor="let course of coursesCompleted">
+				<h3 class="h3" [innerHTML]="course.title | hcSimpleMd"></h3>
+				<div class="progress mb-2">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="((course.progress?.progressPercentage || 0) * 100) | number:'1.0-0'" [style.width]="course.progress.progressPercentage|percent"><span class="progress-text">{{course.progress.progressPercentage|percent}}</span></div>
+				</div>
+				<div class="btn-group">
+					<a class="btn btn-sm btn-primary" [routerLink]="['/courses/', course.url_slug]">Go to Course</a>
+					<button class="btn btn-sm btn-primary" type="button" (click)="selectedCourse = course" data-toggle="modal" data-target="#progress-modal">Detailed Progress</button>
+					<app-complete-cert-button [courseId]="course.system_id"></app-complete-cert-button>
+					<button class="btn btn-sm btn-outline-danger leave-button" type="button" (click)="leaveCourse(course)">Leave Course</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<ng-container *ngIf="!courses.length; then noCourses"></ng-container>
+</ng-template>
+<ng-template #noCourses>
+	<div class="row">
+		<div class="col-md-8 offset-md-2 text-center">
+			<p>You are not currently enrolled in any courses.</p>
+			<p>Enroll from <a routerLink="/course-list">the courses page</a> to track progress.</p>
+		</div>
+	</div>
+</ng-template>
+
+<div class="modal fade" id="progress-modal" tabindex="-1" role="dialog" aria-labelledby="progress-modal-title" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title" id="progress-modal-title" [innerHTML]="selectedCourse?.title | hcSimpleMd"></h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<div class="row" *ngIf="selectedCourse">
+					<div class="col">
+						<app-course-progress [course]="selectedCourse"></app-course-progress>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

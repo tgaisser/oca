@@ -1,0 +1,159 @@
+@import "variables";
+
+@serifFontFamily: "Freight Display Pro Black", Times, serif;
+@sansFontFamily: "Freight Sans Pro Book", sans-serif;
+
+.trailer-container {
+	position: relative;
+}
+
+
+/*
+* Landing Page v1
+*/
+.landing-template-v1 {
+	max-width: 745px;
+	margin: 0 auto;
+	color: #000;
+	font-family: @sansFontFamily;
+
+	h1,
+	.h1,
+	h2,
+	.h2,
+	h3,
+	.h3,
+	h4,
+	.h4,
+	h5,
+	.h5,
+	h6,
+	.h6 {
+		color: #003366;
+		font-weight: bold;
+	}
+
+	h1,
+	.h1,
+	h2,
+	.h2 {
+		font-family: @serifFontFamily;
+		margin: 1rem 0;
+	}
+
+	h3,
+	.h3,
+	h4,
+	.h4,
+	h5,
+	.h5,
+	h6,
+	.h6 {
+		font-family: @serifFontFamily;
+		margin: 0 0 1rem 0;
+
+		@media (min-width: 991px) {
+			margin: 0 1rem 1rem 0;
+		}
+	}
+
+	p,
+	.p,
+	::ng-deep p,
+	::ng-deep .p {
+		font-family: "Arial", sans-serif;
+	}
+
+	@media (max-width: 991px) {
+		.page-title.h2 {
+			font-family: @sansFontFamily;
+			font-size: 2.25em;
+			text-align: left !important;
+			font-weight: bold !important;
+		}
+
+		h2.h2 {
+			font-family: @sansFontFamily;
+			font-size: 1.25em;
+			font-weight: 700;
+			font-style: normal;
+		}
+	}
+
+	.trailer {
+		position: relative;
+		margin-bottom: 30px;
+
+		@media (max-width: 991px) {
+			&:not(.image-only) {
+				display: none;
+			}
+		}
+
+		@media (min-width: 576px) {
+			min-height: 285px;
+		}
+
+		@media (min-width: 768px) {
+			min-height: 385px;
+		}
+
+		@media (min-width: 992px) {
+			min-height: 385px;
+		}
+
+		@media (min-width: 1200px) {
+			min-height: 385px;
+		}
+	}
+
+	//.trailer-overlay {
+	//	background: none;
+	//}
+
+	.landing-page-intro {
+		.course-sponsor {
+			margin: 30px 0;
+			text-align: center;
+		}
+
+		@media (min-width: 992px) {
+			padding-left: 30px;
+			padding-right: 30px;
+
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			z-index: 50;
+
+			.page-title {
+				color: @highlight-color;
+			}
+
+			.course-sponsor {
+				color: @highlight-color;
+			}
+		}
+	}
+
+	form {
+		@media (min-width: 992px) {
+			padding-right: 15px;
+		}
+	}
+
+	.testimonials {
+		border: 1px solid #000;
+		background-color: #f6f6f6;
+		padding: 30px;
+
+		.h4 {
+			text-align: center;
+		}
+
+		p {
+			line-height: 20px;
+		}
+	}
+}

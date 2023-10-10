@@ -1,0 +1,121 @@
+<main id="main-content" *ngIf="pageDvdCatalog$ | async as pageDvdCatalog">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1 *ngIf="pageDvdCatalog.page_title; else dummyPageTitle" class="page-title" tabindex="-1"
+					[innerHTML]="pageDvdCatalog.page_title | hcSimpleMd"></h1>
+				<ng-template #dummyPageTitle>
+					<div class="dummy-section">
+						<div class="page-title" class="h1 dummy-page-title"></div>
+					</div>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+
+	<ng-container *ngIf="pageDvdCatalog.main_page_content; else dummyPageContent">
+		<div class="container">
+			<div *ngFor="let textBlock of pageDvdCatalog.main_page_content" class="row mb-5">
+				<div class="col-12">
+					<h2 [innerHTML]="textBlock.title | hcSimpleMd"></h2>
+					<div [innerHTML]="textBlock.text"></div>
+				</div>
+			</div>
+
+			<h2 class="sr-only">DVD Sets</h2>
+			<div class="row">
+				<div *ngFor="let course of pageDvdCatalog.listed_dvds" class="col-md-6 mb-5">
+					<div class="row">
+						<div class="col-sm-4">
+							<ng-container *ngIf="course.dvd_catalog_image?.url">
+								<img [src]="course.dvd_catalog_image.url + '?w=175'" alt="" class="dvd-image">
+							</ng-container>
+						</div>
+
+						<div class="col-sm-8">
+							<h3 class="h4" [innerHTML]="course.title | hcSimpleMd"></h3>
+							<div [innerHtml]="course.dvd_catalog_description && course.dvd_catalog_description.length > 11 ? course.dvd_catalog_description : course.overview"></div>
+							<a [href]="course.dvd_donation_url___catalog_page ? course.dvd_donation_url___catalog_page : course.course_dvd_donation_url" target="_blank" class="btn btn-primary">
+								Donate for <span class="sr-only" [innerHTML]="course.title|hcSimpleMd:'plaintext'"></span> DVD
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-v-padding" *ngIf="pageDvdCatalog.highlighted_product_title && pageDvdCatalog.highlighted_product_url && pageDvdCatalog.highlighted_product_image">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<ng-container *ngIf="pageDvdCatalog.highlighted_product_image?.url">
+							<img [src]="pageDvdCatalog.highlighted_product_image.url + '?w=540'" alt="" class="img-fluid">
+						</ng-container>
+					</div>
+
+					<div class="col-md-6">
+						<h2 class="h2" [innerHTML]="pageDvdCatalog.highlighted_product_title | hcSimpleMd"></h2>
+						<div [innerHtml]="pageDvdCatalog.highlighted_product_description"></div>
+						<a [href]="pageDvdCatalog.highlighted_product_url" target="_blank" class="btn btn-primary">
+							Donate Today <span class="sr-only" [innerHTML]="' for ' + pageDvdCatalog.highlighted_product_title|hcSimpleMd:'plaintext'"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-container>
+	<ng-template #dummyPageContent>
+		<div class="container">
+			<div class="dummy-section">
+				<div class="row mb-5">
+					<div class="col-12">
+						<div class="h2 dummy-title"></div>
+						<div>
+							<div class="p dummy-text"></div>
+							<div class="p dummy-text"></div>
+							<div class="p dummy-text"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 mb-5">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="dummy-image"></div>
+							</div>
+
+							<div class="col-sm-8">
+								<div class="h4 dummy-title"></div>
+								<div>
+									<div class="p dummy-text"></div>
+									<div class="p dummy-text"></div>
+									<div class="p dummy-text"></div>
+								</div>
+								<div class="btn btn-primary dummy-button"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 mb-5">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="dummy-image"></div>
+							</div>
+
+							<div class="col-sm-8">
+								<div class="h4 dummy-title"></div>
+								<div>
+									<div class="p dummy-text"></div>
+									<div class="p dummy-text"></div>
+									<div class="p dummy-text"></div>
+								</div>
+								<div class="btn btn-primary dummy-button"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</main>

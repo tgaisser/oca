@@ -1,0 +1,32 @@
+@import 'variables';
+
+:host {
+	display: block;
+	position: relative;
+	z-index: 5;
+	transition: @transition;
+
+	@supports (position: sticky) or (position: -webkit-sticky) {
+		position: -webkit-sticky;
+		position: sticky;
+		// Typical height of the header
+		top: @header-height;
+	}
+}
+
+.top-marker,
+.bottom-marker {
+	position: absolute;
+	width: 0px;
+	height: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+.top-marker {
+	top: calc(-1px - @header-height);
+}
+
+.bottom-marker {
+	bottom: -1px;
+}

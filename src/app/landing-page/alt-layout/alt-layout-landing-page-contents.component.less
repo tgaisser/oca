@@ -1,0 +1,61 @@
+@import "variables";
+@import url("https://fonts.googleapis.com/css?family=Merriweather&display=swap");
+
+.trailer-container {
+	position: relative;
+}
+
+.trailer {
+	position: relative;
+	min-height: unset;
+
+	&:before {
+		content: "";
+		display: block;
+		background-color: transparent;
+		padding-top: 56.25%;
+	}
+
+	.trailer-content {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		max-height: 100%;
+	}
+}
+
+.trailer-overlay {
+	background: none;
+}
+
+.enroll-form-wrapper {
+	border: 1px solid @primary-color;
+	padding: 15px;
+}
+
+form {
+	.btn-group {
+		.btn {
+			max-width: 100%;
+			margin-bottom: 0;
+		}
+	}
+}
+
+.testimonials {
+	.testimonial-name,
+	.testimonial-location {
+		font-family: @paragraph-font;
+		text-transform: uppercase;
+	}
+
+	.testimonial-name {
+
+	}
+
+	.testimonial-location {
+		color: @accent-gray-color;
+	}
+}

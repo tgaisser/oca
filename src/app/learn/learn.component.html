@@ -1,0 +1,50 @@
+<main id="main-content" class="learn-page-wrapper" *ngIf="pageLearn$ | async as pageLearn; else dummyContent">
+	<div class="page-banner container-fluid">
+		<div class="row bg-blue" [ngStyle]="{'background-image': pageLearn?.banner_image?.url ? 'url(\'' + pageLearn.banner_image.url + '?w=1600\')' : 'none'}">
+			<div class="page-banner-content">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<h1 class="page-title text-center" tabindex="-1">
+								<span class="h2 d-block m-0">Hillsdale College</span>
+								<span class="h1 d-block m-0">Online Courses</span>
+							</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content-row">
+		<app-thank-you *ngIf="router.url === '/learn/thank-you';  else defaultLearn" [pageLearn]="pageLearn"></app-thank-you>
+		<ng-template #defaultLearn>
+			<app-landing [pageLearn]="pageLearn"></app-landing>
+		</ng-template>
+	</div>
+</main>
+
+<ng-template #dummyContent>
+	<div class="container">
+		<div class="dummy-section">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>

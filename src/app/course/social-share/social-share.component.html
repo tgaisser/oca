@@ -1,0 +1,11 @@
+<div class="social-media-share">
+	<a *ngIf="facebook" [href]="'https://www.facebook.com/sharer.php?u='+shareURL" target="_blank" class="btn btn-facebook-f" title="Share on Facebook">
+		<fa-icon [icon]="faFacebookF"></fa-icon>
+	</a>
+	<a *ngIf="twitter" [href]="'https://twitter.com/share?url='+shareURL+'&text='+shareText" target="_blank" class="btn btn-twitter" title="Share on Twitter">
+		<fa-icon [icon]="faTwitter"></fa-icon>
+	</a>
+	<a *ngIf="email" [href]="'mailto:?subject=Hillsdale College Online Courses&body='+shareText+'%0D%0A%0D%0A'+shareURL"  class="btn btn-email" title="Share over Email">
+		<fa-icon [icon]="faEnvelope"></fa-icon>
+	</a>
+</div>

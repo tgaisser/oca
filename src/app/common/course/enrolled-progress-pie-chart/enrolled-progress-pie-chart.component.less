@@ -1,0 +1,101 @@
+@import "variables";
+
+//https://medium.com/@andsens/radial-progress-indicator-using-css-a917b80c43f9
+//https://codepen.io/jo-asakura/pen/stFHi
+@completeColor: @primary-color;
+@incompleteColor: #A8B2BF; // Lightened version of @primary-color
+
+
+
+/*
+* Custom 100% handling
+*/
+//.pie-wrapper.progress-greater-50.percent-100{
+//	background: #0a8c0a;
+//	&:before {
+//		background: transparent;
+//	}
+//}
+
+/*
+ * Styling for the actual pie shape
+ */
+.pie-wrapper {
+	background: linear-gradient(to right, @incompleteColor 50%, @completeColor 50%);
+	border-radius: 50%;
+	height: 3rem;
+	width: 3rem;
+	overflow: hidden;
+	position: relative;
+
+	&::before {
+		border-radius: 0 100% 100% 0 / 50%;
+		content: '';
+		display: block;
+		height: 100%;
+		margin-left: 50%;
+		-webkit-transform-origin: left;
+		transform-origin: left;
+	}
+
+
+	//might be cleaner/shorter: https://stackoverflow.com/a/41959457
+	&.progress-50-or-less {
+		&:before {
+			background: @incompleteColor;
+		}
+		@iterations: 50;
+		.perc-loop (@i) when (@i > 0) {
+			&.percent-@{i}:before {
+				@calcedPerc: 3.6 * @i;
+				@calcedPerc1: -360 + @calcedPerc;
+				transform: rotate(~'@{calcedPerc1}deg');
+			}
+			.perc-loop(@i - 1);
+		}
+		.perc-loop (@iterations);
+	}
+	&.progress-greater-50 {
+		&:before {
+			background: @completeColor
+		}
+		@iterations: 50;
+		.perc-loop (@i) when (@i > 0) {
+			@percName: @i + 50;
+			&.percent-@{percName}:before {
+				@calcedPerc: 3.6 * @i;
+				@calcedPerc1: 180 - @calcedPerc;
+				transform: rotate(~'@{calcedPerc}deg');
+			}
+			.perc-loop(@i - 1);
+		}
+		.perc-loop (@iterations);
+	}
+
+
+	.label {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		color: #fff;
+		cursor: default;
+		font-family: @subtitle-font;
+		font-size: 1.25rem;
+		line-height: 1;
+		text-align: center;
+		text-shadow: @text-shadow;
+
+		.smaller {
+			font-size: 0.875rem;
+		}
+	}
+}
+
+

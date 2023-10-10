@@ -1,0 +1,110 @@
+@import "variables";
+
+.trailer-container {
+	position: relative;
+}
+
+.landing-template-v1 {
+	max-width: 745px;
+	margin: 0 auto;
+	//color: #000;
+	//font-family: "Arial", sans-serif;
+
+	h1,
+	.h1,
+	h2,
+	.h2,
+	h3,
+	.h3,
+	h4,
+	.h4,
+	h5,
+	.h5,
+	h6,
+	.h6 {
+		//color: #003366;
+		//font-weight: bold;
+	}
+
+	h1,
+	.h1,
+	h2,
+	.h2 {
+		//font-family: "Merriweather", "Times New Roman", Times, serif;
+		margin: 1rem 0;
+	}
+
+	h3,
+	.h3,
+	h4,
+	.h4,
+	h5,
+	.h5,
+	h6,
+	.h6 {
+		//font-family: "Georgia", "Times New Roman", Times, serif;
+		margin: 0 0 1rem 0;
+	}
+
+	p,
+	.p,
+	::ng-deep p,
+	::ng-deep .p {
+		//font-family: "Arial", sans-serif;
+	}
+
+	.trailer {
+		position: relative;
+		margin-bottom: 30px;
+
+		@media (min-width: 576px) {
+			min-height: 285px;
+		}
+
+		@media (min-width: 768px) {
+			min-height: 385px;
+		}
+
+		@media (min-width: 992px) {
+			min-height: 385px;
+		}
+
+		@media (min-width: 1200px) {
+			min-height: 385px;
+		}
+	}
+
+	.trailer-overlay {
+		background: none;
+	}
+
+	form {
+		@media (min-width: 992px) {
+			padding-right: 15px;
+		}
+	}
+
+	.testimonials {
+		border: 1px solid #000;
+		background-color: #f6f6f6;
+		padding: 30px;
+
+		.h4 {
+			text-align: center;
+		}
+
+		p {
+			line-height: 17px;
+		}
+	}
+}
+
+.testimonial {
+	p {
+		margin-bottom: 4px;
+		line-height: 1;
+		font-family: Arial,sans-serif;
+		font-size: 1.25rem; 
+	}
+}
+

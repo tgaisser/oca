@@ -1,0 +1,288 @@
+<ng-container *ngIf="pageHome$ | async as pageHome">
+<main id="main-content" class="container-fluid" *ngIf="courses$ | async as courses">
+	<h1 class="sr-only">Hillsdale College Online Courses</h1>
+
+	<div id="welcome" class="row bg-highlight-primary" [ngStyle]="{'background-image': pageHome?.banner_image?.url ? 'url(\'' + pageHome.banner_image.url + '?w=1920\')' : 'none'}">
+		<div class="welcome-content">
+			<div class="container-fluid">
+				<ng-container *ngIf="user$ | async as user; else loggedOutWelcome">
+					<div class="row align-items-center">
+						<div class="col-lg-6 p-0 order-lg-last">
+							<div *ngIf="pageHome?.welcome_video_embed_url__signed_in_" class="responsive-video-wrapper">
+								<iframe [src]="welcomeVideoEmbedUrlSignedIn" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+							</div>
+							<img *ngIf="!pageHome?.welcome_video_embed_url__signed_in_ && pageHome?.welcome_fallback_image__signed_in_" [src]="pageHome?.welcome_fallback_image__signed_in_.url" alt="">
+						</div>
+
+						<div class="col-lg-6 py-5 px-3 px-sm-5">
+							<div class="welcome-text">
+								<h2 class="h1 mt-0">Welcome back<span *ngIf="user.firstname">, {{user.firstname}}</span>!</h2>
+								<div class="my-4" *ngIf="pageHome?.welcome_text__signed_in_" [innerHTML]="pageHome?.welcome_text__signed_in_"></div>
+								<ng-container *ngIf="pageHome?.welcome_button_text__signed_in_ && pageHome?.welcome_button_url__signed_in_">
+									<ng-container *ngIf="pageHome?.welcome_button_url__signed_in_.includes('http'); else welcomeSignedInInternalLink">
+										<a [href]="pageHome?.welcome_button_url__signed_in_" class="btn btn-secondary" target="_blank">{{pageHome?.welcome_button_text__signed_in_}}</a>
+									</ng-container>
+									<ng-template #welcomeSignedInInternalLink>
+										<a [routerLink]="pageHome?.welcome_button_url__signed_in_" [queryParams]="pageHome?.welcome_button_url__signed_in___query_params_" class="btn btn-secondary">{{pageHome?.welcome_button_text__signed_in_}}</a>
+									</ng-template>
+								</ng-container>
+							</div>
+						</div>
+					</div>
+				</ng-container>
+				<ng-template #loggedOutWelcome>
+					<div class="row align-items-center">
+						<div class="col-lg-6 p-0 order-lg-last">
+							<div *ngIf="pageHome?.welcome_video_embed_url" class="responsive-video-wrapper">
+								<iframe [src]="welcomeVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+							</div>
+							<img *ngIf="!pageHome?.welcome_video_embed_url && pageHome?.welcome_fallback_image" [src]="pageHome?.welcome_fallback_image.url" alt="">
+						</div>
+
+						<div class="col-lg-6 p-5">
+							<div class="welcome-text">
+								<h2 class="h1 mt-0" [innerHTML]="pageHome?.welcome_title"></h2>
+								<div class="my-5" *ngIf="pageHome?.welcome_text" [innerHTML]="pageHome?.welcome_text"></div>
+
+								<form hcForm [formGroup]="signupForm" class="form" (ngSubmit)="routeToSignup(signupForm)">
+									<div class="form-row justify-content-center">
+										<label id="welcome-email-label" for="welcome-email" class="form-label sr-only">Email</label>
+										<div class="input-group col-lg-12">
+											<input id="welcome-email" type="email" class="form-control"
+												   placeholder="Email" aria-label="Email" aria-describedby="welcome-email-label"
+												   formControlName="email" autoComplete="email">
+											<button class="btn btn-secondary btn-allow-invalid-click" type="submit">Get Started</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</ng-template>
+			</div>
+		</div>
+	</div>
+
+	<div id="my-courses" class="row bg-highlight-quaternary content-v-padding"  *ngIf="isLoggedIn">
+		<ng-container *ngIf="enrolledCourse$| async as enrolledCrs">
+			<ng-container *ngIf="enrolledCrs.length > 0">
+				<div class="col">
+					<h2 class="h1 subject-title">Continue where you left off</h2>
+					<div class="row">
+						<ng-container *ngFor="let course of enrolledCrs">
+							<app-course-catalog-entry *ngIf="course.enrolled" class="col-sm-6 col-lg-4" [catalogEntry]="course"></app-course-catalog-entry>
+						</ng-container>
+					</div>
+				</div>
+			</ng-container>
+		</ng-container>
+	</div>
+
+	<div id="intro" class="row bg-highlight-quaternary content-v-padding" *ngIf="!isLoggedIn">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 p-3">
+					<div *ngIf="pageHome?.introduction_video_embed_url" class="responsive-video-wrapper">
+						<iframe [src]="introductionVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+					</div>
+					<img *ngIf="!pageHome?.introduction_video_embed_url && pageHome?.introduction_fallback_image" [src]="pageHome?.introduction_fallback_image.url" alt="">
+				</div>
+
+				<div class="col-lg-6 p-3">
+					<h2 class="h2" [innerHTML]="pageHome?.introduction_title"></h2>
+					<div *ngIf="pageHome?.introduction_text" [innerHTML]="pageHome?.introduction_text"></div>
+					<ng-container *ngIf="pageHome?.introduction_button_url">
+						<ng-container *ngIf="pageHome?.introduction_button_url.includes('http'); else introductionInternalLink">
+							<a [href]="pageHome?.introduction_button_url" class="btn btn-primary" target="_blank">Learn More<span class="sr-only"> about {{pageHome?.introduction_title}}</span></a>
+						</ng-container>
+						<ng-template #introductionInternalLink>
+							<a [routerLink]="pageHome?.introduction_button_url" [queryParams]="pageHome?.introduction_button_url__query_params_" class="btn btn-primary">Learn More<span class="sr-only"> about {{pageHome?.introduction_title}}</span></a>
+						</ng-template>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="featured" class="row bg-highlight-primary content-v-padding text-center">
+		<div class="col-12">
+			<h2 class="h1 mt-0 featured-title">Featured Courses</h2>
+			<div class="row">
+				<div class="col-12 text-left">
+					<div class="featured-courses-wrapper-edges">
+						<div #featuredSlider class="featured-courses-wrapper">
+							<div class="featured-courses">
+								<app-course-catalog-entry class="py-3" [catalogEntry]="course" *ngFor="let course of pageHome.featured_courses"></app-course-catalog-entry>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" (click)="moveSlider(-300)">
+						<span class="carousel-control-prev-icon"></span>
+						<span class="sr-only">Slide left</span>
+					</button>
+					<button class="carousel-control-next" (click)="moveSlider(300)">
+						<span class="carousel-control-next-icon"></span>
+						<span class="sr-only">Slide right</span>
+					</button>
+				</div>
+			</div>
+			<a routerLink="/course-list" class="btn btn-secondary mt-3">View All Courses</a>
+		</div>
+	</div>
+
+	<div id="announcement" class="row bg-highlight-tertiary content-v-padding text-center" *ngIf="pageHome?.announcement_title">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="h1 mt-0" [innerHTML]="pageHome?.announcement_title"></h2>
+
+					<div class="row my-4">
+						<div class="col-lg-8 offset-lg-2">
+							<div *ngIf="pageHome?.announcement_video_embed_url" class="responsive-video-wrapper">
+								<iframe [src]="announcementVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+							</div>
+							<img *ngIf="!pageHome?.announcement_video_embed_url && pageHome?.announcement_fallback_image" [src]="pageHome?.announcement_fallback_image.url" alt="" class="m-0">
+						</div>
+					</div>
+
+					<div *ngIf="pageHome?.announcement_text" [innerHTML]="pageHome?.announcement_text"></div>
+
+					<ng-container *ngIf="pageHome?.announcement_button_url">
+						<ng-container *ngIf="pageHome?.announcement_button_url.includes('http'); else announcementInternalLink">
+							<a [href]="pageHome?.announcement_button_url" class="btn btn-primary" target="_blank">Learn More<span class="sr-only"> about {{pageHome?.announcement_title}}</span></a>
+						</ng-container>
+						<ng-template #announcementInternalLink>
+							<a [routerLink]="pageHome?.announcement_button_url" [queryParams]="pageHome?.announcement_button_url__query_params_" class="btn btn-primary">Learn More<span class="sr-only"> about {{pageHome?.announcement_title}}</span></a>
+						</ng-template>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="articles" class="row content-v-padding" *ngIf="blogFeed?.items && blogFeed?.items?.length > 0">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="h1 mt-0">Latest Articles</h2>
+				</div>
+			</div>
+
+			<div class="row">
+				<ng-container *ngFor="let blogPost of blogFeed.items; first as isFirst">
+					<ng-container *ngIf="isFirst; else defaultBlogPost">
+						<div class="col-lg-8 mb-3">
+							<a href="{{blogPost.url}}" target="_blank" class="tile tile-image r-4-3 tag-none mb-3" [ngStyle]="{'background-image': blogPost.image_large ? 'url(\'' + blogPost.image_large + '?w=750\')' : 'none'}">
+								<div class="tile-content sr-only">{{blogPost.title}}</div>
+							</a>
+						</div>
+						<div class="blog-post col-lg-4 mb-3">
+							<a href="{{blogPost.url}}" target="_blank">
+								<h3 class="blog-post-title h3">{{blogPost.title}}</h3>
+								<div class="blog-post-meta">
+									<p>By {{blogPost.author.name}}</p>
+								</div>
+								<div class="blog-post-content">
+									<p style="color:#102d51;">{{blogPost.content_text.substring(0, 350)}}...</p>
+								</div>
+							</a>
+							<div class="blog-post-meta">
+								<p>{{blogPost.date_published | date: 'MMMM d, yyyy'}}</p>
+							</div>
+							<a href="{{blogPost.url}}" target="_blank" class="btn btn-primary">Read More<span class="sr-only"> about {{blogPost.title}}</span></a>
+						</div>
+					</ng-container>
+					<ng-template #defaultBlogPost>
+						<div class="blog-post col-lg-4 mb-3 mt-4 mt-sm-0">
+							<a href="{{blogPost.url}}" target="_blank">
+								<a href="{{blogPost.url}}" target="_blank" class="tile tile-image r-4-3 tag-none mb-3" [ngStyle]="{'background-image': blogPost.image_large ? 'url(\'' + blogPost.image_large + '?w=750\')' : 'none'}">
+									<div class="tile-content sr-only">{{blogPost.title}}</div>
+								</a>
+								<h3 class="blog-post-title h3">{{blogPost.title}}</h3>
+								<div class="blog-post-meta">
+									<p>By {{blogPost.author.name}}</p>
+								</div>
+								<div class="blog-post-content">
+									<p style="color:#102d51;">{{blogPost.content_text.substring(0, 150)}}...</p>
+								</div>
+							</a>
+							<div class="blog-post-meta">
+								<p>{{blogPost.date_published | date: 'MMMM d, yyyy'}}</p>
+							</div>
+							<a href="{{blogPost.url}}" target="_blank" class="btn btn-primary">Read More<span class="sr-only"> about {{blogPost.title}}</span></a>
+						</div>
+					</ng-template>
+				</ng-container>
+			</div>
+
+			<div class="row mt-4">
+				<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4 text-center">
+					<a class="btn btn-primary btn-block" [href]="environment.blogUrl" target="_blank">Visit Blog</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="testimonials" class="row bg-highlight-tertiary content-v-padding" *ngIf="pageHome?.testimonials_title">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2 class="h2" [innerHTML]="pageHome?.testimonials_title"></h2>
+					<div *ngIf="pageHome?.testimonials_text" [innerHTML]="pageHome?.testimonials_text"></div>
+				</div>
+			</div>
+
+			<div class="row text-center">
+				<carousel [pauseOnFocus]="true" [interval]="12000" [(activeSlide)]="activeSlideIndex">
+					<slide *ngFor="let testimonial of testimonials$|async">
+						<div class="col-12 testimonial">
+							<h3 class="h3 testimonial-name">{{testimonial.user_name}}</h3>
+							<p class="h4 testimonial-location">{{testimonial.user_location}}</p>
+							<div class="p testimonial-text" [innerHTML]="testimonial.message|hcSimpleMd"></div>
+						</div>
+					</slide>
+				</carousel>
+<!--				<div class="col-lg-6 p-3">-->
+<!--					<div class="testimonial-text">[Testimonial text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores commodi dolorum explicabo impedit, nemo pariatur possimus quos. Ad animi aperiam dicta, earum ipsum itaque maiores molestiae omnis rem ullam?]</div>-->
+<!--					<p class="h3 testimonial-name">[Testimonial name]</p>-->
+<!--					<p class="h4 testimonial-location">[Testimonial location]</p>-->
+<!--				</div>-->
+
+<!--				<div class="col-lg-6 p-3">-->
+<!--					<div class="testimonial-text">[Testimonial text. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores commodi dolorum explicabo impedit, nemo pariatur possimus quos. Ad animi aperiam dicta, earum ipsum itaque maiores molestiae omnis rem ullam?]</div>-->
+<!--					<p class="h3 testimonial-name">[Testimonial name]</p>-->
+<!--					<p class="h4 testimonial-location">[Testimonial location]</p>-->
+<!--				</div>-->
+			</div>
+		</div>
+	</div>
+
+	<div id="cta" class="row content-v-padding text-center" *ngIf="!isLoggedIn && pageHome?.cta_title">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h2 class="h2" [innerHTML]="pageHome?.cta_title"></h2>
+					<div *ngIf="pageHome?.cta_text" [innerHTML]="pageHome?.cta_text"></div>
+
+					<form [formGroup]="signupForm2" class="form" (ngSubmit)="routeToSignup(signupForm2)">
+						<div class="form-row justify-content-center">
+							<label id="cta-email-label" for="welcome-email" class="form-label sr-only">Email</label>
+							<div class="input-group col-lg-6">
+								<input id="cta-email" type="email" class="form-control"
+									   placeholder="Email" aria-label="Email" aria-describedby="cta-email-label"
+									   formControlName="email" autoComplete="email">
+								<button class="btn btn-secondary btn-allow-invalid-click" type="submit">Get Started</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row d-none">
+		<app-course-catalog-entry class="col-sm-6 col-lg-4" [catalogEntry]="course" *ngFor="let course of courses | courseSubjectFilter:selectedSubject"></app-course-catalog-entry>
+	</div>
+</main>
+</ng-container>
+<script src="https://player.vimeo.com/api/player.js"></script>

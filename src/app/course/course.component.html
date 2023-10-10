@@ -1,0 +1,234 @@
+<ng-container *ngIf="sidebarStatus$ | async as sidebarStatus">
+	<div [ngClass]="sidebarStatus.hasSidebar && sidebarStatus.isOpen ? 'sidebar-open' : 'sidebar-closed'" *ngIf="courseAndStudyGroup$ | async as courseInfo">
+		<ngx-json-ld [json]="schema"></ngx-json-ld>
+		<main id="main-content" [ngClass]="{'study-session': isStudyGroup}" *ngIf="courseInfo.course">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+
+						<div id="course-content">
+							<ng-container *ngIf="courseInfo.studyGroup; else basicCourseIntro">
+								<div class="trailer bg-blue my-5" style="min-height: 200px;">
+									<img *ngIf="courseInfo.course.catalog_image?.url" [src]="courseInfo.course?.catalog_image?.url + '?w=1110'" alt="" class="trailer-art">
+									<ng-container *ngIf="courseInfo.studyGroup.intro_video_id">
+										<hc-video-player #trailerVideo class="trailer-art trailer-video" [attr.multimedia]="stringifyMM(courseInfo.studyGroup.intro_video)" [ngStyle]="{'z-index': hideTrailerOverlay ? 1: -1}" [attr.player-type-preference]='playerPreference'></hc-video-player>
+									</ng-container>
+									<div class="trailer-overlay" *ngIf="courseInfo.studyGroup.intro_video_id" [ngClass]="{'d-none': hideTrailerOverlay}">
+										<button class="btn btn-primary play-button" type="button" (click)="playTrailerVideo()"><span class="sr-only">Play Introductory Video</span><fa-icon [icon]="faPlay"></fa-icon></button>
+									</div>
+								</div>
+
+								<h1 class="page-title" tabindex="-1">
+									<span class="d-block h2" style="font-size: 125%;">Study Group</span>
+									<span class="d-block h1" [innerHTML]="courseInfo.course.title|hcSimpleMd"></span>
+								</h1>
+								<p class="h4 course-sponsor" *ngIf="courseInfo.course.course_sponsor">Generous Sponsorship Provided by <span [innerHTML]="courseInfo.course.course_sponsor|hcSimpleMd"></span></p>
+
+								<div [innerHTML]="courseInfo.studyGroup.introductory_body_text"></div>
+
+								<div class="text-center">
+									<div class="btn-group">
+										<a *ngIf="courseInfo.studyGroup?.study_group_syllabus?.url" [href]="courseInfo.studyGroup?.study_group_syllabus?.url" target="_blank" class="btn btn-primary">Download the Syllabus</a>
+										<a *ngIf="courseInfo.studyGroup?.pre_course_test_url" [href]="courseInfo.studyGroup?.pre_course_test_url" target="_blank" class="btn btn-primary">Take a Course Pre-Test</a>
+										<a *ngIf="courseInfo.studyGroup?.midterm_survey_url && courseInfo.studyGroup?.midterm_survey_availability_date && courseInfo.studyGroup?.midterm_survey_availability_date <= now" [href]="courseInfo.studyGroup?.midterm_survey_url" target="_blank" class="btn btn-primary">Take the Midpoint Survey</a>
+									</div>
+								</div>
+							</ng-container>
+							<ng-template #basicCourseIntro>
+								<h1 class="page-title" tabindex="-1" [innerHTML]="courseInfo.course.title|hcSimpleMd"></h1>
+								<p class="h4 course-sponsor" *ngIf="courseInfo.course.course_sponsor">Generous Sponsorship Provided by <span [innerHTML]="courseInfo.course.course_sponsor|hcSimpleMd"></span></p>
+							</ng-template>
+
+							<div class="share-wrapper text-right">
+								<app-social-share
+									[shareURL]="'https://online.hillsdale.edu/landing/' + courseInfo.course.url_slug + '?utm_source=housefile&utm_medium=referral&utm_campaign=' + (courseInfo.course.share_campaign_utm_code || '')"
+									[shareText]="'Join me in taking Hillsdale\’s free online course, &quot;' + (courseInfo.course.title|hcSimpleMd:'plaintext') + '&quot;:'"
+									[facebook]="true"
+									[twitter]="true"
+									[email]="true"
+								></app-social-share>
+							</div>
+
+							<ng-container>
+								<h2 class="sr-only">Course Lectures</h2>
+								<h3 *ngIf="displayCoursePublicationDate" class="h3 text-center coming-soon">
+									Full Course Coming {{courseInfo.course.publication_date | date: 'MMMM d, yyyy'}}
+								</h3>
+									<ng-container *ngIf="courseInfo.studyGroup; else basicCourse">
+										<div class="row session-date-group mx-0" [ngClass]="getSessionClass(courseInfo.course, session)" *ngFor="let session of courseInfo.studyGroup.sessions; index as sessionNum">
+											<div class="col" (click)="setStudySession(session)">
+												<h3 *ngIf="!session.optional_lectures.length" class="h3 session-title"><span class="session-date" title="Will become available at {{session.available_date | date:'short'}} Local Time">{{session.available_date | date:'short':'America/Detroit'}} Eastern Time</span> <span>Study Session</span></h3>
+												<h3 *ngIf="session.optional_lectures.length" class="h3 session-title"><span class="session-date" title="Will become available at {{session.available_date | date:'shortDate'}}">{{session.available_date | date:'shortDate':'America/Detroit'}}</span> <span>Study Session</span></h3>
+												<ol class="content-list accordion course-accordion" [id]="'content-list-' + sessionNum">
+													<ng-container *ngFor="let content of courseInfo.course.lectures; index as idx; trackBy: trackLesson">
+													<li class="card course-card" *ngIf="session.lecture_ids.includes(content.system_id)">
+														<div [id]="'course-anchor--'+content.url_slug" tabindex="-1"></div>
+														<app-lesson [courseId]="courseInfo.course.system_id" [lecture]="content" layout="card" [lessonNumber]="idx + 1" [sessionNumber]="sessionNum" [isLive]="false" [availableDate]="session.available_date">
+															<div class="skip-link">
+																<a (click)="skipToSidebar()" href onclick="return false;" class="btn btn-secondary btn-skip"><span>Skip to sidebar</span></a>
+															</div>
+														</app-lesson>
+													</li>
+													</ng-container>
+													<li class="card course-card" *ngFor="let optional_lecture of session.optional_lectures; index as idx">
+														<div [id]="'course-anchor--'+optional_lecture.url_slug" tabindex="-1"></div>
+														<app-lesson [courseId]="courseInfo.course.system_id" [lecture]="optional_lecture" layout="card" [lessonNumber]="idx + 1" [sessionNumber]="sessionNum" [isLive]="true" [availableDate]="session.available_date"
+                                                                    [sidebarStatus]="sidebarStatus">
+															<div class="skip-link">
+																<a (click)="skipToSidebar()" href onclick="return false;" class="btn btn-secondary btn-skip"><span>Skip to sidebar</span></a>
+															</div>
+														</app-lesson>
+													</li>
+												</ol>
+
+												<div style="margin-top: 10px;">
+													<app-audio-player *ngIf="session.podcast"
+														[title]="getPodcastText(session)"
+														[multimedia]="session.podcast" [courseId]="courseInfo.course.system_id"
+														(audioDownloaded)="podcastDownloaded($event, courseInfo.course.system_id, session.system_id)"
+													></app-audio-player>
+												</div>
+
+												<div style="margin-top: 20px" *ngIf="session.discussion_questions" class="discussion-questions">
+													<h4>Discussion Question</h4>
+													<div [innerHTML]="session.discussion_questions"></div>
+													<div class="btn-group" *ngIf="session.discussion_board_post_url">
+														<a class="btn btn-primary" [href]="session.discussion_board_post_url" target="_blank">Go to Discussion Board</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</ng-container>
+									<ng-template #basicCourse>
+										<ol id="content-list-0" class="accordion course-accordion">
+											<li class="card course-card" *ngFor="let content of courseInfo.course.lectures; index as idx; trackBy: trackLesson">
+												<div [id]="'course-anchor--'+content.url_slug" tabindex="-1"></div>
+												<app-lesson [courseId]="courseInfo.course.system_id" [lecture]="content" layout="card" [lessonNumber]="idx + 1" [allowAccess]="allowAccessToLecture(courseInfo.course, idx)">
+													<div class="skip-link">
+														<a (click)="skipToSidebar()" href onclick="return false;" class="btn btn-secondary btn-skip"><span>Skip to sidebar</span></a>
+													</div>
+												</app-lesson>
+											</li>
+										</ol>
+									</ng-template>
+								<div class="progress-activity mt-3">
+									<div *ngIf="numLectures && numLectures > 0" class="activity-count">
+										<p class="activity-label">Lectures watched:<br><strong>{{numCompletedLectures}}</strong>&nbsp;of&nbsp;<strong>{{numLectures}}</strong></p>
+									</div>
+									<div *ngIf="numQuizzes && numQuizzes > 0" class="activity-count">
+										<p class="activity-label">Quizzes taken:<br><strong>{{numCompletedQuizzes}}</strong>&nbsp;of&nbsp;<strong>{{numQuizzes}}</strong></p>
+									</div>
+									<div *ngIf="numFinalQuizzes && numFinalQuizzes > 0" class="activity-count">
+										<p class="activity-label">Final quiz score:<br><strong>{{ ((finalQuizProgress?.started) ? (finalQuizProgress?.progressPercentage|percent) : ("Not taken")) }}</strong><br><small class="text-muted">(80% passing)</small></p>
+									</div>
+									<div class="final-quiz-button">
+										<h2 class="sr-only">Final Quiz</h2>
+										<a routerLink="./final-quiz" [title]="!finalQuizEligible ? 'You must complete all lectures and quizzes to take the final quiz.' : ''" class="btn btn-primary final-quiz-button" [ngClass]="{'disabled': !finalQuizEligible, 'progress-started': finalQuizProgress?.started, 'progress-completed': finalQuizProgress?.completed}">
+											<span class="progress-indicator" [title]="finalQuizProgress?.completed ? 'Final Quiz passed' : finalQuizProgress?.started ? 'Final Quiz failed' : 'Final Quiz not started'"></span>
+											Final Quiz
+										</a>
+										<p *ngIf="!finalQuizEligible" class="text-muted small m-0">You must complete all lectures<br><span *ngIf="numQuizzes && numQuizzes > 0">and quizzes</span> to take the final quiz.</p>
+									</div>
+								</div>
+								<div class="overall-progress-wrapper">
+									<h2 class="h2">Overall Progress</h2>
+									<div class="overall-progress-details">
+										<div class="progress overall-progress">
+											<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+												 [attr.aria-valuenow]="((courseInfo.course.progress?.progressPercentage || 0) * 100) | number:'1.0-0'"
+												 [style.width]="courseInfo.course.progress?.progressPercentage|percent"><span class="progress-text">{{courseInfo.course.progress?.progressPercentage|percent}}</span></div>
+										</div>
+									</div>
+								</div>
+								<div class="essay-contest-section" *ngIf="courseInfo.studyGroup && courseInfo.studyGroup?.essay_contest_description && courseInfo.studyGroup?.essay_contest_pdf">
+									<h2 class="h2 mt-5">High School Essay Contest</h2>
+									<div [innerHTML]="courseInfo.studyGroup.essay_contest_description"></div>
+									<div class="btn-group">
+										<a [href]="courseInfo.studyGroup?.essay_contest_pdf?.url" target="_blank" class="btn btn-primary">High School Essay Contest</a>
+									</div>
+								</div>
+							</ng-container>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<aside #sidebar id="sidebar" tabindex="-1">
+			<button id="sidebar-toggle" class="btn btn-info" type="button" (click)="toggleSidebar(sidebarStatus.isOpen)"><fa-icon [icon]="sidebarStatus.isOpen ? faArrowRight : faArrowLeft"></fa-icon><span class="sr-only">{{sidebarStatus.isOpen ? 'Close sidebar' : 'Open sidebar'}}</span></button>
+
+			<div class="sidebar-content">
+				<ng-container *ngIf="currentLesson$ | async as currentLesson; else noCurrentLesson">
+
+					<h2 class="h4 single-line-text"><span class="sr-only">Lecture Materials for </span><span [innerHTML]="currentLesson.title|hcSimpleMd"></span></h2>
+					<div class="btn-group resource-buttons">
+						<div class="dropdown" *ngIf="currentLesson.recommended_readings?.length || currentStudyGroupSession?.recommended_readings?.length">
+							<button class="btn btn-primary dropdown-toggle" type="button" id="readingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Readings
+							</button>
+							<div class="dropdown-menu" aria-labelledby="readingsDropdown">
+								<ng-container *ngIf="currentLesson.recommended_readings">
+									<a *ngFor="let reading of currentLesson.recommended_readings" class="dropdown-item view-pdf" [href]="reading.url" data-reading-type="reading" target="_blank" [innerHtml]="(reading.description || reading.name) | hcSimpleMd"></a>
+								</ng-container>
+								<ng-container *ngIf="currentStudyGroupSession">
+									<a *ngFor="let sessionReading of currentStudyGroupSession.recommended_readings" class="dropdown-item view-pdf" [href]="sessionReading.url" data-reading-type="reading" target="_blank" [innerHtml]="(sessionReading.description || sessionReading.name) | hcSimpleMd"></a>
+								</ng-container>
+							</div>
+						</div>
+						<a *ngIf="currentLesson.study_guide && currentLesson.study_guide.url || courseInfo.course?.study_guide?.url" [href]="currentLesson?.study_guide?.url || courseInfo.course?.study_guide?.url" target="_blank" class="btn btn-primary view-pdf" data-reading-type="studyGuide">Study Guide</a>
+						<ng-container>
+							<a *ngIf="courseInfo.studyGroup?.discussion_board_section_url; else standardSessionDiscussionUrl" [href]="courseInfo.studyGroup?.discussion_board_section_url" target="_blank" class="btn btn-primary">Discussion</a>
+							<ng-template #standardSessionDiscussionUrl>
+								<a [href]="discourseUrl + courseInfo.course?.url_slug" target="_blank" class="btn btn-primary">Discussion</a>
+							</ng-template>
+						</ng-container>
+					</div>
+
+					<div class="notes-wrapper">
+						<h3 class="h4">Lecture Notes</h3>
+						<p class="text-muted small">Keep track of your thoughts and main lecture points here. Your notes will be saved to your account and synced across your devices.</p>
+						<angular-editor id="notes-editor" [placeholder]="'Enter text here...'" [(ngModel)]="notesText" (ngModelChange)="storeNotes()" [config]="editorConfig"></angular-editor>
+						<div class="text-info small" *ngIf="notesSaveStatus$|async as notesStatus">
+							<ng-container *ngIf="notesStatus.isSaving; else notesLastSaved">
+								Saving... <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+							</ng-container>
+							<ng-template #notesLastSaved>
+								Saved at {{notesStatus.savedAt | date:'medium'}}
+							</ng-template>
+						</div>
+						<a href="javascript:void(0)" (click)="openOtherNotes()">View course notes</a>
+					</div>
+
+					<app-course-donate-links class="btn-group-stacked mt-3" [splitText]="false" [course]="courseInfo.course"></app-course-donate-links>
+
+					<div class="skip-link">
+						<a (click)="skipToCurrentLesson()" href onclick="return false;" class="btn btn-secondary btn-skip"><span>Skip to current lesson</span></a>
+					</div>
+				</ng-container>
+				<ng-template #noCurrentLesson>
+					<ng-container *ngIf="!(currentStudyGroupSession?.optional_lectures?.length); else liveSession">
+
+					<div class="course-overview">
+						<h2>Course Overview</h2>
+						<div [innerHtml]="courseInfo.course?.overview"></div>
+					</div>
+
+					<app-course-donate-links [splitText]="false" [course]="courseInfo?.course" class="btn-group-stacked"></app-course-donate-links>
+
+					<div class="course-instructors">
+						<h2>
+							Course Instructor<ng-template [ngIf]="courseInfo.course?.instructors.length && courseInfo.course.instructors.length > 1">s</ng-template>
+						</h2>
+						<app-instructor *ngFor="let instructor of courseInfo.course?.instructors" [instructor]="instructor"></app-instructor>
+					</div>
+					</ng-container>
+					<ng-template #liveSession>
+						<iframe [src]="livestreamChatUrl" width="100%" height="100%" frameborder="0"></iframe>
+					</ng-template>
+				</ng-template>
+			</div>
+		</aside>
+	</div>
+
+</ng-container>

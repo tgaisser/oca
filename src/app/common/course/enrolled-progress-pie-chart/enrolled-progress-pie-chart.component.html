@@ -1,0 +1,5 @@
+<ng-container *ngIf="course && course.enrolled && course.progress">
+	<div class="pie-wrapper" [ngClass]="getClasses()">
+		<span class="label" [title]="(course.progress?.progressPercentage >= 1 ? 'Completed ' : (course.progress?.progressPercentage|percent) + ' progress for ') + course.title | hcSimpleMd:'plaintext'">{{(course.progress?.progressPercentage * 100) | number:'1.0-0'}}<span class="smaller">%</span></span>
+	</div>
+</ng-container>

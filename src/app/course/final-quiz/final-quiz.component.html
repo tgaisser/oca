@@ -1,0 +1,9 @@
+<main id="main-content" *ngIf="course$ | async as course">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<app-quiz [quiz]="course.final_quiz" quizType="final" [courseId]="course.system_id" [course]="course" [shouldShowResultsByDefault]="false"></app-quiz>
+			</div>
+		</div>
+	</div>
+</main>

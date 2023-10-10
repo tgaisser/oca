@@ -1,0 +1,147 @@
+{
+	"name": "online-courses",
+	"version": "0.0.0",
+	"scripts": {
+		"ng": "ng",
+		"start": "ng serve",
+		"build": "ng build",
+		"test": "jest",
+		"test:watch": "jest --watch",
+		"lint": "ng lint",
+		"test:ci": "jest --runInBand --silent",
+		"e2e": "ng e2e",
+		"bundle-report": "webpack-bundle-analyzer dist/online-courses/browser/stats.json",
+		"dev:ssr": "ng run online-courses:serve-ssr",
+		"serve:ssr": "node dist/online-courses/server/main.js",
+		"build:ssr": "ng build && ng run online-courses:server",
+		"prerender": "ng run online-courses:prerender"
+	},
+	"jest": {
+		"preset": "jest-preset-angular",
+		"setupFilesAfterEnv": [
+			"<rootDir>/src/setupJest.ts"
+		],
+		"globalSetup": "jest-preset-angular/global-setup",
+		"moduleFileExtensions": [
+			"ts",
+			"html",
+			"js",
+			"json",
+			"mjs"
+		],
+		"moduleNameMapper": {
+			"ngx-mask": "<rootDir>/node_modules/ngx-mask/fesm2015/ngx-mask.mjs"
+		},
+		"testPathIgnorePatterns": [
+			"/node_modules/",
+			"/ngx-bootstrap.local/"
+		],
+		"coveragePathIgnorePatterns": [
+			"/node_modules/",
+			"/ngx-bootstrap.local/"
+		],
+		"globals": {
+			"ts-jest": {
+				"tsconfig": "<rootDir>/src/tsconfig.spec.json"
+			}
+		},
+		"coverageReporters": [
+			"text",
+			"cobertura"
+		],
+		"reporters": [
+			"default",
+			[
+				"jest-summary-reporter",
+				{
+					"failuresOnly": true
+				}
+			]
+		]
+	},
+	"private": true,
+	"dependencies": {
+		"@angular/animations": "~13.3.6",
+		"@angular/common": "~13.3.6",
+		"@angular/compiler": "~13.3.6",
+		"@angular/core": "~13.3.6",
+		"@angular/forms": "~13.3.6",
+		"@angular/platform-browser": "~13.3.6",
+		"@angular/platform-browser-dynamic": "~13.3.6",
+		"@angular/platform-server": "~13.3.6",
+		"@angular/router": "~13.3.6",
+		"@angular/service-worker": "~13.3.6",
+		"@egjs/hammerjs": "^2.0.17",
+		"@fortawesome/angular-fontawesome": "^0.10.2",
+		"@fortawesome/fontawesome-svg-core": "^6.2.1",
+		"@fortawesome/free-brands-svg-icons": "^6.2.1",
+		"@fortawesome/free-solid-svg-icons": "^6.2.1",
+		"@kolkov/angular-editor": "^2.0.0",
+		"@ngrx/effects": "^13.2.0",
+		"@ngrx/store": "^13.2.0",
+		"@ngrx/store-devtools": "^13.2.0",
+		"@ngx-lite/json-ld": "^0.6.4",
+		"angulartics2": "^12.0.0",
+		"aws-amplify": "^4.1.2",
+		"core-js": "^3.3.3",
+		"dexie": "^3.0.3",
+		"express": "^4.15.2",
+		"hc-video-player": "1.2.13",
+		"hillsdale-ng-helper-lib": "^1.4.0",
+		"jest-summary-reporter": "0.0.2",
+		"lodash.get": "^4.4.2",
+		"lodash.pickby": "^4.6.0",
+		"ngx-bootstrap": "file:./ngx-bootstrap.local",
+		"ngx-cookie-service": "^13.2.0",
+		"ngx-mask": "~13.1.12",
+		"ngx-rxjs-zone-scheduler": "^13.0.3",
+		"ngx-toastr": "^14.0.0",
+		"ngx-ui-loader": "~13.0.0",
+		"request-animation-frame-polyfill": "^1.0.1",
+		"rxjs": "^7.4.0",
+		"smoothscroll-polyfill": "^0.4.4",
+		"tslib": "^2.0.0",
+		"wavesurfer.js": "^5.2.0",
+		"zone.js": "~0.11.4"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "~13.3.5",
+		"@angular-eslint/builder": "13.5.0",
+		"@angular-eslint/eslint-plugin": "13.5.0",
+		"@angular-eslint/eslint-plugin-template": "13.5.0",
+		"@angular-eslint/schematics": "13.5.0",
+		"@angular-eslint/template-parser": "13.5.0",
+		"@angular/cli": "~13.3.5",
+		"@angular/compiler-cli": "~13.3.6",
+		"@angular/language-service": "~13.3.6",
+		"@ngrx/schematics": "^13.2.0",
+		"@nguniversal/builders": "~13.1.1",
+		"@nguniversal/express-engine": "~13.1.1",
+		"@types/express": "^4.17.0",
+		"@types/jest": "^27.5.0",
+		"@types/node": "^12.11.1",
+		"@types/zen-observable": "^0.8.0",
+		"@typescript-eslint/eslint-plugin": "5.27.1",
+		"@typescript-eslint/parser": "5.27.1",
+		"eslint": "^8.17.0",
+		"fake-indexeddb": "^3.1.7",
+		"jest": "^27.5.1",
+		"jest-preset-angular": "^11.1.1",
+		"protractor": "~7.0.0",
+		"rxjs-compat": "^6.6.7",
+		"ts-node": "~8.3.0",
+		"typescript": "~4.6.4",
+		"webpack-bundle-analyzer": "^3.6.0"
+	},
+	"overrides": {
+		"@ngx-lite/json-ld": {
+			"@angular/core": "~13.3.6",
+			"@angular/common": "~13.3.6",
+			"@angular/forms": "~13.3.6",
+			"@angular/platform-browser": "~13.3.6"
+		},
+		"jest-config": {
+			"ts-node": "~8.3.0"
+		}
+	}
+}

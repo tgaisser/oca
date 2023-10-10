@@ -1,0 +1,128 @@
+@import 'variables';
+@import (reference) '../../styles.less';
+
+.col-spacious {
+	padding: 15px;
+
+	@media (min-width: 768px) {
+		padding: 30px;
+	}
+
+	@media (min-width: 992px) {
+		padding: 60px;
+	}
+
+	@media (min-width: 1200px) {
+		padding: 90px;
+	}
+}
+
+.main-heading {
+	margin: 0;
+
+	.h1,
+	.h2 {
+		margin: 0;
+		padding: 15px 0;
+	}
+
+	.h1 {
+		display: inline-block;
+	}
+
+	.h2 {
+		display: block;
+		padding-bottom: 0;
+	}
+}
+
+.tile {
+	&:before {
+		background: transparent;
+	}
+}
+
+.arnn-tile {
+	background-position: center 15%;
+	min-height: 500px;
+}
+
+.testimonial {
+
+	.h3.testimonial-name, .h4.testimonial-location {
+		font-family: @body-font;
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+	}
+
+	.h4.testimonial-location {
+		color: @accent-gray-color;
+	}
+
+}
+
+::ng-deep .carousel-control-next-icon, ::ng-deep .carousel-control-prev-icon {
+	width: 25px;
+	height: 25px;
+}
+
+
+// Specific elements
+#n1st_row {
+
+}
+
+#oc-course-grid {
+	border-radius: 7px 7px 0 0;
+}
+
+#n2nd_row {
+
+}
+
+#n3rd_row {
+	.about-page-content ::ng-deep {
+		p {
+			&:extend(.h2);
+			&:extend(.text-xl);
+			color: inherit;
+			margin: 0;
+		}
+	}
+}
+
+#n4th_row {
+	.about-page-content ::ng-deep {
+		h2 {
+			&:extend(.h1);
+			margin-top: 0;
+			margin-bottom: 1.5rem;
+		}
+
+		a {
+			margin-top: 3rem;
+		}
+	}
+}
+
+#n5th_row {
+	.about-page-content ::ng-deep {
+		h2 {
+			&:extend(.h1);
+			margin-top: 0;
+			margin-bottom: 1.5rem;
+		}
+	}
+}
+
+#n6th_row {
+	.about-page-content ::ng-deep {
+		em {
+			&:extend(.h2);
+			&:extend(.text-xl);
+			font-weight: bold;
+			margin-top: 3rem;
+			margin-bottom: 3rem;
+		}
+	}
+}

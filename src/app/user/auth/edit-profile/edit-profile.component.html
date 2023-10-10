@@ -1,0 +1,75 @@
+<div class="row">
+	<div class="col-12">
+		<h1 class="page-title" tabindex="-1">Account Information</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 offset-md-2">
+		<form hcForm [formGroup]="profileForm" autocomplete="on" class="form" (hcValidSubmit)="editProfile()">
+			<div class="form-row">
+				<div class="form-group col-lg-2" hc-form-field fieldType="select" [selectValues]="titleList"
+					 fieldName="Title" elemId="title" autoComplete="honorific-prefix">
+				</div>
+				<div class="form-group col-lg-4" hc-form-field
+					 fieldName="First Name" elemId="fname" autoComplete="given-name">
+				</div>
+				<div class="form-group col-lg-6" hc-form-field
+					 fieldName="Last Name" elemId="lname" autoComplete="family-name">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-6">
+					<label for="email">Email<span class="req-asterisk">*</span></label>
+					<input readonly id="email" name="email" type="text" formControlName="email" autocomplete="email" required class="form-control">
+				</div>
+				<div class="form-group col-lg-6">
+					<label for="telephone">Phone Number</label>
+					<input type="tel" id="telephone" formControlName="phone" autocomplete="tel" class="form-control"
+						   prefix="+1 " mask="(000) 000-0000" [showMaskTyped]="true">
+					<hc-form-error [elemHandle]="profileForm.get('phone')" fieldName="Phone Number"></hc-form-error>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-12" hc-form-field
+					 fieldName="Address" elemId="address_line1" autoComplete="address-line1">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-12" hc-form-field
+					 fieldName="Address Line 2" elemId="address_line2" autoComplete="address-line2">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="form-group col-lg-6" hc-form-field
+					 fieldName="City" elemId="address_city" autoComplete="address-level2">
+				</div>
+
+				<div class="form-group col-lg-3" hc-form-field fieldType="select" [selectValues]="stateList"
+					 selectTextField="value" selectValueField="key" [selectHasGroups]="true"
+					 fieldName="State" elemId="address_state" autoComplete="address-level1">
+				</div>
+				<div class="form-group col-lg-3" hc-form-field
+					 fieldName="Postal Code" elemId="address_postal_code" autoComplete="postal-code">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-12">
+					<span class="req-asterisk">* Required fields</span>
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-12 text-center">
+					<div class="btn-group">
+						<button class="btn btn-primary" type="submit" [disabled]="loading.loading">Save</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

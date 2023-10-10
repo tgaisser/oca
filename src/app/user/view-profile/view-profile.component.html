@@ -1,0 +1,19 @@
+<div class="container" *ngIf="user$| async as user">
+	<div class="row">
+		<div class="col-12">
+			<h3>Profile</h3>
+
+			<h4>{{user.firstname}} {{user.lastname}}</h4>
+			<p *ngIf="user.address">
+				{{user.address}} <br>
+				{{user.city}}, {{user.state}} {{user.zip}}
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<h3 class="text-center">Course Progress</h3>
+			<app-user-user-course-list></app-user-user-course-list>
+		</div>
+	</div>
+</div>

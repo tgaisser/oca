@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="row pt-5">
+		<div class="col-lg-12">
+			<div class="row">
+				<div class="col-lg-12" [innerHTML]="pageLearn?.thank_you___main_body_text"></div>
+			</div>
+
+			<div class="row mt-5">
+				<div class="col-lg-12">
+					<h2 class="h2">Recommended Courses</h2>
+					<app-next-course [singleColumnLayout]="false" [requestedSubject]="subjectPreference"></app-next-course>
+				</div>
+
+				<div class="col-12 text-center">
+					<a routerLink="/" fragment="course-offerings" class="btn btn-link mt-3">View All Online Courses</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

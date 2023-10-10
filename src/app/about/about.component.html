@@ -1,0 +1,126 @@
+<main id="main-content" class="about-page-wrapper" *ngIf="pageAbout$ | async as pageAbout; else dummyContent">
+	<div id="n1st_row" class="content-row">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-md-6 col-spacious">
+					<h1 class="main-heading">
+						<span class="h1">About</span>
+						<img src="https://assets-us-01.kc-usercontent.com/c7bb3f89-eb78-007e-971a-d5864cf7a236/8c8f6c0c-ee23-45ea-98c6-68da86975e67/OCHCbrandNoURLVertical.png?w=450" alt="Hillsdale College Online Courses" class="img-fluid d-block mb-3 hc-oc-logo">
+					</h1>
+					<div class="about-page-content my-4" [innerHTML]="pageAbout.n1st_row_content"></div>
+					<app-kentico-button *ngIf="pageAbout.n1st_row_button" [button]="pageAbout.n1st_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+				</div>
+
+				<div class="col-md-6 col-spacious pr-0 text-right">
+					<img [src]="pageAbout.n1st_row_image?.url" alt="" id="oc-course-grid" class="img-fluid box-blur">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="n2nd_row" class="content-row bg-grey">
+		<div class="container-fluid">
+			<div class="row align-items-stretch">
+				<div class="col-lg-6 p-0 text-center">
+					<div class="tile tile-image r-fill tag-none arnn-tile" [ngStyle]="{'background-image': pageAbout.n2nd_row_image?.url ? 'url(\'' + pageAbout.n2nd_row_image?.url + '?w=750\')' : 'none'}"></div>
+				</div>
+
+				<div class="col-lg-6 align-self-center col-spacious">
+					<div class="about-page-content" [innerHTML]="pageAbout.n2nd_row_content"></div>
+					<app-kentico-button *ngIf="pageAbout.n2nd_row_button" [button]="pageAbout.n2nd_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="n3rd_row" class="content-row bg-blue bg-image"[ngStyle]="{'background-image': pageAbout.n3rd_row_image?.url ? 'url(\'' + pageAbout.n3rd_row_image?.url + '?w=1920\')' : 'none'}">
+		<div class="container container-wide">
+			<div class="row align-items-center">
+				<div class="col-12 col-spacious text-center">
+					<div class="about-page-content" [innerHTML]="pageAbout.n3rd_row_content"></div>
+					<app-kentico-button *ngIf="pageAbout.n3rd_row_button" [button]="pageAbout.n3rd_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="n4th_row" class="content-row">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<div class="col-lg-6 col-spacious">
+					<div class="about-page-content" [innerHTML]="pageAbout.n4th_row_content"></div>
+					<app-kentico-button *ngIf="pageAbout.n4th_row_button" [button]="pageAbout.n4th_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+				</div>
+
+				<div class="col-lg-6 p-0 text-center">
+					<div class="responsive-video-wrapper">
+						<iframe [src]="lifetimeOfLearningVideoSrc" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="n5th_row" class="content-row bg-grey">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-spacious text-center">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="about-page-content" [innerHTML]="pageAbout.n5th_row_content"></div>
+							<app-kentico-button *ngIf="pageAbout.n5th_row_button" [button]="pageAbout.n5th_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+						</div>
+					</div>
+					<hr class="my-5">
+					<div class="row">
+						<carousel [pauseOnFocus]="true" [interval]="12000" [(activeSlide)]="activeSlideIndex">
+							<slide *ngFor="let testimonial of testimonials$|async">
+								<div class="col-12 testimonial">
+									<h3 class="h3 testimonial-name">{{testimonial.user_name}}</h3>
+									<p class="h4 testimonial-location">{{testimonial.user_location}}</p>
+									<div class="p testimonial-text" [innerHTML]="testimonial.message|hcSimpleMd"></div>
+								</div>
+							</slide>
+						</carousel>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="n6th_row" class="content-row">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-spacious text-center">
+					<div class="about-page-content" [innerHTML]="pageAbout.n6th_row_content"></div>
+					<app-kentico-button *ngIf="pageAbout.n6th_row_button" [button]="pageAbout.n6th_row_button" buttonClasses="btn btn-primary"></app-kentico-button>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<ng-template #dummyContent>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="dummy-section">
+					<div class="page-title" class="h1 dummy-page-title"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dummy-section">
+			<div class="row">
+				<div class="col-12">
+					<div class="h2 dummy-title"></div>
+					<div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+						<div class="p dummy-text"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template>
