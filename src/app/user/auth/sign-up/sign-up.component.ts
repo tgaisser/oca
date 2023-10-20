@@ -39,7 +39,6 @@ import {LoadingService} from '../../../common/loading.service';
 export class SignUpComponent implements OnDestroy, OnInit {
 	@Input() simpleMode = false;
 	@Input() submitText = 'Create Hillsdale Account';
-	@Input() thirdPartySignup = true;
 	@Input() displayHeader = true;
 	@Input() displaySignInLink = true;
 	@Input() putTermsAndConditionsBeneathSubmitButton  = false;
@@ -231,26 +230,6 @@ export class SignUpComponent implements OnDestroy, OnInit {
 			});
 		}
 		return Promise.resolve(true);
-	}
-
-	async googleLogin() {
-		const valid = await this.getSubjectPreference();
-
-		if (valid) {
-			Auth.federatedSignIn({provider: 'Google' as any /*CognitoHostedUIIdentityProvider.Google*/}).then(r => {
-				console.log('got google login', r);
-			});
-		}
-	}
-
-	async facebookLogin() {
-		const valid = await this.getSubjectPreference();
-
-		if (valid) {
-			Auth.federatedSignIn({provider: 'Facebook' as any /*CognitoHostedUIIdentityProvider.Facebook*/}).then(r => {
-				console.log('got facebook login', r);
-			});
-		}
 	}
 
 	handleSignin() {

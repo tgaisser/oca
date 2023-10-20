@@ -125,26 +125,4 @@ export class SignInComponent implements OnDestroy, OnInit {
 				}
 			});
 	}
-
-	// async signInWithFacebook() {
-	// 	const socialResult = await this.auth.socialSignIn(UserService.FACEBOOK);
-	// 	console.log('fb Result:', socialResult);
-	// }
-	//
-	// async signInWithGoogle() {
-	// 	const socialResult = await this.auth.socialSignIn(UserService.GOOGLE);
-	// 	console.log('google Result:', socialResult);
-	// }
-
-	googleLogin() {
-		Auth.federatedSignIn({provider: 'Google' as any /*CognitoHostedUIIdentityProvider.Facebook*/}).then(r => {
-			console.log('got google login', r);
-		});
-	}
-
-	facebookLogin() {
-		Auth.federatedSignIn({provider: 'Facebook' as any /*CognitoHostedUIIdentityProvider.Facebook*/}).then(r => {
-			console.log('got facebook login', r);
-		});
-	}
 }

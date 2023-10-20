@@ -37,26 +37,16 @@
 				<div class="col-lg-6 offset-lg-3 text-center">
 					<div class="btn-group sign-in">
 						<button class="btn btn-primary" (click)="signIn()" [disabled]="!signinForm.valid">Sign In</button>
-						<!--p style="text-align:center;">or</p>
-				<button class="btn btn-primary" (click)="signInWithFacebook()">Sign In with Facebook</button>
-				<br/><br/>
-				<button class="btn btn-primary" (click)="signInWithGoogle()">Sign In with Google</button-->
 					</div>
 					<p class="text-center">Forgot your password? <a routerLink="/auth/forgot-password">Reset Password</a></p>
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="struck-separator">
-						<span>OR</span>
-					</div>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="col-lg-8 offset-lg-2 social-signin-buttons">
-					<div class="btn-group">
-						<button class="btn facebook-btn" (click)="facebookLogin()"><fa-icon [icon]="faFacebookSquare"></fa-icon> Sign in with Facebook</button>
-						<button class="btn google-btn" (click)="googleLogin()"><img src="assets/g-logo.png" alt="" /> Sign in with Google</button>
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<br /><br />
+					<p class="mt-5 mb-0">Don't have an account yet?</p>
+					<div class="btn-group my-3">
+						<a routerLink="/auth/signup" class="btn btn-outline-primary">Create Hillsdale Account</a>
 					</div>
 				</div>
 			</div>
@@ -64,12 +54,4 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-lg-8 offset-lg-2 text-center">
-		<hr>
-		<p class="mt-5 mb-0">Don't have an account yet?</p>
-		<div class="btn-group my-3">
-			<a routerLink="/auth/signup" class="btn btn-outline-primary">Create Hillsdale Account</a>
-		</div>
-	</div>
-</div>
+
