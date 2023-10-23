@@ -142,10 +142,12 @@ describe('Course reducer', () => {
 		});
 		const state = courseReducer.reducer(fixtureState.course, action);
 		expect(state.coursesProgress).toBeTruthy();
-		expect(state.coursesProgress
-			.find(i => i.itemId === 'course1').children
-			.find(i => i.itemId === 'videoLesson1').progressPercentage)
-			.toEqual(resultPercentage);
+		
+		const course1 = state.coursesProgress?.find(i => i.itemId === 'course1');
+		expect(course1?.children).toBeTruthy();
+		
+		const videoLesson1 = course1?.children?.find(i => i.itemId === 'videoLesson1');
+		expect(videoLesson1?.progressPercentage).toEqual(resultPercentage);
 	});
 
 	it('should actions.updateCourseContentProgress -- quiz', () => {
@@ -155,10 +157,12 @@ describe('Course reducer', () => {
 		});
 		const state = courseReducer.reducer(fixtureState.course, action);
 		expect(state.coursesProgress).toBeTruthy();
-		expect(state.coursesProgress
-			.find(i => i.itemId === 'course1').children
-			.find(i => i.itemId === 'mockQuizId').progressPercentage)
-			.toEqual(resultPercentage);
+		
+		const course1 = state.coursesProgress?.find(i => i.itemId === 'course1');
+		expect(course1?.children).toBeTruthy();
+		
+		const mockQuizId = course1?.children?.find(i => i.itemId === 'mockQuizId');
+		expect(mockQuizId?.progressPercentage).toEqual(resultPercentage);
 	});
 
 	it('should actions.setGeneralTestimonials', () => {
@@ -169,7 +173,10 @@ describe('Course reducer', () => {
 		expect(state.generalTestimonials).toEqual(
 			expect.arrayContaining([
 				expect.objectContaining({
-					title: 'mockTitle'
+					title: 'mockTitle',
+					user_name: 'mockName',
+					user_location: 'mockLocation',
+					message: 'mockMessage'
 				}),
 			])
 		);
