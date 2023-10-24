@@ -165,23 +165,41 @@ describe('Course reducer', () => {
 		expect(mockQuizId?.progressPercentage).toEqual(resultPercentage);
 	});
 
-	it('should actions.setGeneralTestimonials', () => {
+	it('should actions.setGeneralTestimonials return reduced result record', () => {
 		const action = actions.setGeneralTestimonials({
-			testimonials: [ helpers.getMockTestimonial() ]
+		  testimonials: helpers.getMockTestimonials()
 		});
 		const state = courseReducer.reducer(initialState, action);
 		expect(state.generalTestimonials).toEqual(
-			expect.arrayContaining([
-				expect.objectContaining({
-					title: 'mockTitle',
-					user_name: 'mockName',
-					user_location: 'mockLocation',
-					message: 'mockMessage'
-				}),
-			])
+		  expect.arrayContaining([
+			expect.objectContaining({
+			  title: 'mockTitle',
+			  user_name: 'mockUser_name',
+			  user_location: 'mockUser_location',
+			  message: 'mockTestimonialMessage',
+			  referenced_course_id: ''
+			}),
+		  ])
 		);
 	});
-
+	  
+	it('should actions.setGeneralTestimonials exclude empty user_name', () => {
+		const action = actions.setGeneralTestimonials({
+			testimonials: [helpers.getMockTestimonial({user_name: ''})]
+		});
+		const state = courseReducer.reducer(initialState, action);
+		expect(state.generalTestimonials).toEqual([]);
+	});
+	
+	it('should actions.setCourseTestimonials exclude testimonials with empty user_name', () => {
+		const courseSlug = 'test-course';
+		const testimonials = [helpers.getMockTestimonial({user_name: ''})];
+		const action = actions.setCourseTestimonials({ courseSlug, testimonials });
+		const state = courseReducer.reducer(initialState, action);
+		
+		expect(state.courseTestimonials[courseSlug]).toEqual([]);
+	});
+	
 	it('should actions.setMultimedia', () => {
 		const mockItem1 = helpers.getMockMultimediaItem({id: 'mock1', duration: 100});
 		const mockItem2 = helpers.getMockMultimediaItem({id: 'mock2', duration: 100});

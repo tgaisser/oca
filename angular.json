@@ -151,11 +151,11 @@
 								}
 							]
 						},
-						"azure": {
+						"azure-staging": {
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.azure.ts"
+									"with": "src/environments/environment.azure-staging.ts"
 								}
 							],
 							"optimization": true,
@@ -179,7 +179,46 @@
 							],
 							"assets": [
 								{
-									"input": "src/deployment/azure",
+									"input": "src/deployment/azure-staging",
+									"output": "/",
+									"glob": "*"
+								},
+								{
+									"input": "src/assets",
+									"output": "/assets",
+									"glob": "**/*"
+								}
+							]
+						},
+						"azure-dev": {
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.azure-dev.ts"
+								}
+							],
+							"optimization": true,
+							"outputHashing": "all",
+							"sourceMap": false,
+							"namedChunks": false,
+							"extractLicenses": true,
+							"vendorChunk": false,
+							"buildOptimizer": true,
+							"baseHref": "/",
+							"budgets": [
+								{
+									"type": "initial",
+									"maximumWarning": "2mb",
+									"maximumError": "5mb"
+								},
+								{
+									"type": "anyComponentStyle",
+									"maximumWarning": "6kb"
+								}
+							],
+							"assets": [
+								{
+									"input": "src/deployment/azure-dev",
 									"output": "/",
 									"glob": "*"
 								},
@@ -289,12 +328,23 @@
 							"optimization": true,
 							"extractLicenses": true
 						},
-						"azure": {
+						"azure-dev": {
 							"outputHashing": "media",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
-									"with": "src/environments/environment.azure.ts"
+									"with": "src/environments/environment.azure-dev.ts"
+								}
+							],
+							"optimization": true,
+							"extractLicenses": true
+						},
+						"azure-staging": {
+							"outputHashing": "media",
+							"fileReplacements": [
+								{
+									"replace": "src/environments/environment.ts",
+									"with": "src/environments/environment.azure-staging.ts"
 								}
 							],
 							"optimization": true,
@@ -338,9 +388,13 @@
 							"browserTarget": "online-courses:build:aws-staging",
 							"serverTarget": "online-courses:server:aws-staging"
 						},
-						"azure": {
-							"browserTarget": "online-courses:build:azure",
-							"serverTarget": "online-courses:server:azure"
+						"azure-dev": {
+							"browserTarget": "online-courses:build:azure-dev",
+							"serverTarget": "online-courses:server:azure-dev"
+						},
+						"azure-staging": {
+							"browserTarget": "online-courses:build:azure-staging",
+							"serverTarget": "online-courses:server:azure-staging"
 						},
 						"production": {
 							"browserTarget": "online-courses:build:production",
@@ -364,9 +418,13 @@
 							"browserTarget": "online-courses:build:aws-staging",
 							"serverTarget": "online-courses:server:aws-staging"
 						},
-						"azure": {
-							"browserTarget": "online-courses:build:azure",
-							"serverTarget": "online-courses:server:azure"
+						"azure-dev": {
+							"browserTarget": "online-courses:build:azure-dev",
+							"serverTarget": "online-courses:server:azure-dev"
+						},
+						"azure-staging": {
+							"browserTarget": "online-courses:build:azure-staging",
+							"serverTarget": "online-courses:server:azure-staging"
 						},
 						"stage": {
 							"browserTarget": "online-courses:build:stage",
