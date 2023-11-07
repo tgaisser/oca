@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /landing/dummy-stuff*
+Disallow: /landing/example-stuff*
+Disallow: /partner/*
+Disallow: /register/*

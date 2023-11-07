@@ -87,4 +87,8 @@ describe('SignInComponent', () => {
 
 		expect(mockUserService.logIn).toHaveBeenCalled();
 	});
+
+	//Testing google/facebook login will not work with depreciated aws Auth implementation.
+	test.todo('should googleLogin');
+	test.todo('should facebookLogin');
 });

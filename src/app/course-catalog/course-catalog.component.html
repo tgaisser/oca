@@ -9,7 +9,7 @@
 					<div class="row align-items-center">
 						<div class="col-lg-6 p-0 order-lg-last">
 							<div *ngIf="pageHome?.welcome_video_embed_url__signed_in_" class="responsive-video-wrapper">
-								<iframe [src]="welcomeVideoEmbedUrlSignedIn" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+								<iframe class="optanon-category-C0001" data-ot-ignore="true" [src]="welcomeVideoEmbedUrlSignedIn" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
 							</div>
 							<img *ngIf="!pageHome?.welcome_video_embed_url__signed_in_ && pageHome?.welcome_fallback_image__signed_in_" [src]="pageHome?.welcome_fallback_image__signed_in_.url" alt="">
 						</div>
@@ -34,7 +34,7 @@
 					<div class="row align-items-center">
 						<div class="col-lg-6 p-0 order-lg-last">
 							<div *ngIf="pageHome?.welcome_video_embed_url" class="responsive-video-wrapper">
-								<iframe [src]="welcomeVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+								<iframe class="optanon-category-C0001" data-ot-ignore="true" [src]="welcomeVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
 							</div>
 							<img *ngIf="!pageHome?.welcome_video_embed_url && pageHome?.welcome_fallback_image" [src]="pageHome?.welcome_fallback_image.url" alt="">
 						</div>
@@ -83,7 +83,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 p-3">
 					<div *ngIf="pageHome?.introduction_video_embed_url" class="responsive-video-wrapper">
-						<iframe [src]="introductionVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+						<iframe class="optanon-category-C0001" data-ot-ignore="true" [src]="introductionVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
 					</div>
 					<img *ngIf="!pageHome?.introduction_video_embed_url && pageHome?.introduction_fallback_image" [src]="pageHome?.introduction_fallback_image.url" alt="">
 				</div>
@@ -139,7 +139,7 @@
 					<div class="row my-4">
 						<div class="col-lg-8 offset-lg-2">
 							<div *ngIf="pageHome?.announcement_video_embed_url" class="responsive-video-wrapper">
-								<iframe [src]="announcementVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+								<iframe class="optanon-category-C0001" data-ot-ignore="true" [src]="announcementVideoEmbedUrl" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
 							</div>
 							<img *ngIf="!pageHome?.announcement_video_embed_url && pageHome?.announcement_fallback_image" [src]="pageHome?.announcement_fallback_image.url" alt="" class="m-0">
 						</div>
@@ -285,4 +285,4 @@
 	</div>
 </main>
 </ng-container>
-<script src="https://player.vimeo.com/api/player.js"></script>
+<script data-ot-ignore="true" src="https://player.vimeo.com/api/player.js"></script>

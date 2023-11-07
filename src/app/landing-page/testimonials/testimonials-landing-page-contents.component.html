@@ -1,4 +1,4 @@
-<main id="main-content" class="landing-template-challenger" *ngIf="course">
+<main id="main-content" class="landing-template-v1" *ngIf="course">
 	<div class="container trailer-container mb-5 mt-4">
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2">
@@ -37,6 +37,7 @@
 					<app-sign-up
 						[simpleMode]="true"
 						submitText ='Start your course now'
+						[thirdPartySignup]="false"
 						[displayHeader]="false"
 						[displaySignInLink]="false"
 						[putTermsAndConditionsBeneathSubmitButton]="true"

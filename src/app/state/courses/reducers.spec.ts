@@ -142,12 +142,10 @@ describe('Course reducer', () => {
 		});
 		const state = courseReducer.reducer(fixtureState.course, action);
 		expect(state.coursesProgress).toBeTruthy();
-		
-		const course1 = state.coursesProgress?.find(i => i.itemId === 'course1');
-		expect(course1?.children).toBeTruthy();
-		
-		const videoLesson1 = course1?.children?.find(i => i.itemId === 'videoLesson1');
-		expect(videoLesson1?.progressPercentage).toEqual(resultPercentage);
+		expect(state.coursesProgress
+			.find(i => i.itemId === 'course1').children
+			.find(i => i.itemId === 'videoLesson1').progressPercentage)
+			.toEqual(resultPercentage);
 	});
 
 	it('should actions.updateCourseContentProgress -- quiz', () => {
@@ -157,49 +155,26 @@ describe('Course reducer', () => {
 		});
 		const state = courseReducer.reducer(fixtureState.course, action);
 		expect(state.coursesProgress).toBeTruthy();
-		
-		const course1 = state.coursesProgress?.find(i => i.itemId === 'course1');
-		expect(course1?.children).toBeTruthy();
-		
-		const mockQuizId = course1?.children?.find(i => i.itemId === 'mockQuizId');
-		expect(mockQuizId?.progressPercentage).toEqual(resultPercentage);
+		expect(state.coursesProgress
+			.find(i => i.itemId === 'course1').children
+			.find(i => i.itemId === 'mockQuizId').progressPercentage)
+			.toEqual(resultPercentage);
 	});
 
-	it('should actions.setGeneralTestimonials return reduced result record', () => {
+	it('should actions.setGeneralTestimonials', () => {
 		const action = actions.setGeneralTestimonials({
-		  testimonials: helpers.getMockTestimonials()
+			testimonials: [ helpers.getMockTestimonial() ]
 		});
 		const state = courseReducer.reducer(initialState, action);
 		expect(state.generalTestimonials).toEqual(
-		  expect.arrayContaining([
-			expect.objectContaining({
-			  title: 'mockTitle',
-			  user_name: 'mockUser_name',
-			  user_location: 'mockUser_location',
-			  message: 'mockTestimonialMessage',
-			  referenced_course_id: ''
-			}),
-		  ])
+			expect.arrayContaining([
+				expect.objectContaining({
+					title: 'mockTitle'
+				}),
+			])
 		);
 	});
-	  
-	it('should actions.setGeneralTestimonials exclude empty user_name', () => {
-		const action = actions.setGeneralTestimonials({
-			testimonials: [helpers.getMockTestimonial({user_name: ''})]
-		});
-		const state = courseReducer.reducer(initialState, action);
-		expect(state.generalTestimonials).toEqual([]);
-	});
-	
-	it('should actions.setCourseTestimonials exclude testimonials with empty user_name', () => {
-		const courseSlug = 'test-course';
-		const testimonials = [helpers.getMockTestimonial({user_name: ''})];
-		const action = actions.setCourseTestimonials({ courseSlug, testimonials });
-		const state = courseReducer.reducer(initialState, action);
-		
-		expect(state.courseTestimonials[courseSlug]).toEqual([]);
-	});
-	
+
 	it('should actions.setMultimedia', () => {
 		const mockItem1 = helpers.getMockMultimediaItem({id: 'mock1', duration: 100});
 		const mockItem2 = helpers.getMockMultimediaItem({id: 'mock2', duration: 100});

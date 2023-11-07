@@ -190,25 +190,15 @@ const courseReducer = createReducer(
 	})),
 	on(actions.setGeneralTestimonials, (state, action) => ({
 		...state,
-		generalTestimonials: action.testimonials.filter(testimonial => 
-			testimonial.title && 
-			testimonial.user_name && 
-			testimonial.user_location && 
-			testimonial.message
-		),
+		generalTestimonials: action.testimonials,
 	})),
 	on(actions.setCourseTestimonials, (state, action) => ({
 		...state,
 		courseTestimonials: {
 			...state.courseTestimonials,
-			[action.courseSlug]: action.testimonials.filter(testimonial => 
-				testimonial.title && 
-				testimonial.user_name && 
-				testimonial.user_location && 
-				testimonial.message
-			)
+			[action.courseSlug]: action.testimonials
 		}
-	})),	
+	})),
 );
 
 export function reducer(state: State|undefined, action: Action) {

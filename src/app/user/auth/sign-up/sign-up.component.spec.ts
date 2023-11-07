@@ -74,6 +74,25 @@ describe('SignUpComponent', () => {
 		expect(component).toBeTruthy();
 	});
 
+	it('should facebook login', waitForAsync(() => {
+		component.getSubjectPreference = jest.fn().mockResolvedValue( true );
+		Auth.federatedSignIn = jest.fn().mockResolvedValue( true );
+
+		component.facebookLogin().then(() => {
+			expect(Auth.federatedSignIn).toBeCalledWith({provider: 'Facebook' as any /*CognitoHostedUIIdentityProvider.Facebook*/});
+		});
+	}));
+
+	it('should google login', waitForAsync(() => {
+		component.signUp = jest.fn();
+		component.getSubjectPreference = jest.fn().mockResolvedValue( true );
+		Auth.federatedSignIn = jest.fn().mockResolvedValue( true );
+
+		component.googleLogin().then(() => {
+			expect(Auth.federatedSignIn).toBeCalledWith({provider: 'Google' as any /*CognitoHostedUIIdentityProvider.Google*/});
+		});
+	}));
+
 	it('should dispatch userSetPostLoginUrl when subject preferences true', () => {
 		component._includeSubjectPreference = true;
 		component.handleSignin();
@@ -162,4 +181,8 @@ describe('SignUpComponent', () => {
 		component.signUp();
 		expect(mockUserService.createAccount).toHaveBeenCalled();
 	}));
+
+	//Testing google/facebook login will not work with depreciated aws Auth implementation.
+	test.todo('should googleLogin');
+	test.todo('should facebookLogin');
 });

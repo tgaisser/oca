@@ -193,19 +193,11 @@ export function getMockCourseContent(value?: any) {
 	};
 }
 
-
-export function getMockTestimonials() { 
-	return [
-		getMockTestimonial(),
-		getMockTestimonial({user_name: ''})
-	];
-}
-
 export function getMockTestimonial(value?: any) {
 	return {
 		title: 'mockTitle',
-		user_name: 'mockUser_name',
-		user_location: 'mockUser_location',
+		user_name: 'john',
+		user_location: '',
 		message: 'mockTestimonialMessage',
 		referenced_course_id: '',
 		...value
